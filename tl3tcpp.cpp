@@ -48,12 +48,12 @@ int main()
 				N.J_Sources.push_back(J_Source);
 			}
 
-
-
+			
+			N.No_elements++;
 		}
 
 
-
+		N.NodeVoltage = 0;
 		Nodes.push_back(N);
 
 	}
@@ -62,7 +62,7 @@ int main()
 
 
 
-
+	PrintTest(Nodes);
 
 
 
