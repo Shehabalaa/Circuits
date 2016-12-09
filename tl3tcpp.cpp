@@ -62,3 +62,33 @@ void Input(vector<Node>& Nodes)
 	return;
 
 }
+
+for (unsigned int i = 0; i < Nodes.size(); i++)
+{
+	for (unsigned int j = 0; j < Nodes[i].J_Sources.size(); j++)
+	{
+		cout << "node " << i;
+		cout << Nodes[i].J_Sources[j].mark << " ";
+	}
+
+
+	for (unsigned int j = 0; j < Nodes[i].V_Sources.size(); j++)
+	{
+		cout << "node " << i;
+		cout << Nodes[i].V_Sources[j].mark << " ";
+
+	}
+
+
+	for (unsigned int j = 0; j < Nodes[i].Resistors.size(); j++)
+	{
+		cout << "node " << i;
+		cout << Nodes[i].Resistors[j].mark << " ";
+
+	}
+
+	int x;
+	cin >> x;
+
+	return 0;
+}
