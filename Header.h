@@ -37,7 +37,7 @@ struct Node {
 // FuncsPrototypes
 
 void PrintTest(const vector<Node>&);
-
+void Input(vector<Node>&);
 
 //Node Analysis
 
@@ -49,6 +49,7 @@ void GetNodesVoltage(vector<Node>,vector<Node>&);
 
 void SolveMatrix(double**, int,double*);
 void swaprows(double**, int, int);
+void DeallocateMatrix(double**, int);
 
 
 //

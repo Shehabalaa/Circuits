@@ -1,23 +1,27 @@
 // inputs&&check
 #include "Header.h"
 
-int main()
+void Input(vector<Node>& Nodes)
 {
-
-	vector<Node> Nodes;
 	int n;
 	cout << "How many nodes ? " << endl;
 	cin >> n;
-	for (int i = 1;i <= n;i++)
+	if (n == 0)
 	{
-		int choice;
+		return;
+	}
+	for (int i = 0;i < n;i++)
+	{
 		Node N;
-
-		cout << "Node" << i << endl;
+		N.ref = false;
+		N.NodeVoltage = 0;
+		N.No_elements = 0;
+		cout << "Node" << i+1 << endl;
 		while (1)
 		{
 			cout << "select corresponding No. OF element " << endl;
-			cout << "1.RESISTANCE\n" << "2.VOLTAGE.SOURCE\n" << "3.CURRENT.SOURCE\n" << "0.Done";
+			cout << "1.Resistance\n" << "2.VoltageSourse\n" << "3.Current.Sourse\n" << "0.EndOfOutput\n";
+			int choice;
 			cin >> choice;
 			if (choice == 0) break;
 			if (choice == 1)
@@ -52,34 +56,9 @@ int main()
 			N.No_elements++;
 		}
 
-
-		N.NodeVoltage = 0;
 		Nodes.push_back(N);
 
 	}
 
 
-
-
-
-	PrintTest(Nodes);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	return 0;
 }
