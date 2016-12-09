@@ -19,7 +19,7 @@ void Input(vector<Node>& Nodes)
 		cout << "Node" << i+1 << endl;
 		while (1)
 		{
-			cout << "select corresponding No. OF element " << endl;
+			cout << "Select corresponding No. OF element " << endl;
 			cout << "1.Resistance\n" << "2.VoltageSourse\n" << "3.Current.Sourse\n" << "0.EndOfOutput\n";
 			int choice;
 			cin >> choice;
@@ -59,6 +59,6 @@ void Input(vector<Node>& Nodes)
 		Nodes.push_back(N);
 
 	}
-
+	return;
 
 }

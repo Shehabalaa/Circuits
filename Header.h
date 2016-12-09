@@ -47,7 +47,7 @@ void GetNodesVoltage(vector<Node>,vector<Node>&);
 
 //EquationSolver by Shehab :D
 
-void SolveMatrix(double**, int,double*);
+void SolveMatrix(double**, int,double*&);
 void swaprows(double**, int, int);
 void DeallocateMatrix(double**, int);
 

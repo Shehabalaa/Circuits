@@ -32,10 +32,10 @@
     <ClCompile Include="PrintTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GaussElimination_ByShehab.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="GaussElimination.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

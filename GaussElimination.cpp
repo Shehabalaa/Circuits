@@ -3,7 +3,7 @@
 #include"Header.h"
 
 
-void SolveMatrix(double**A, int N,double * Ans)// A multi dimentional array (matrix) N number of equations Ans empty array will be returned with ans
+void SolveMatrix(double**A, int N, double *& Ans)// A multi dimentional array (matrix) N number of equations Ans empty array will be returned with ans
 {
 	int row = 0, coloum = 0;
 	double temp1, temp2;
@@ -20,7 +20,7 @@ void SolveMatrix(double**A, int N,double * Ans)// A multi dimentional array (mat
 		temp1 = A[row][coloum];
 		if (temp1 == 0) {
 			Ans = NULL;
-			return ;
+			return;
 		}
 
 		for (int i = 0; i <= N; i++)// get one
@@ -42,7 +42,7 @@ void SolveMatrix(double**A, int N,double * Ans)// A multi dimentional array (mat
 		swaprows(A, 0, row); // put the row again in his place
 		row++; coloum++;
 	}
-	double* ANS = new double[N];
+	Ans = new double[N];
 	for (int i = 0; i < N; i++)
 	{
 		double temp; // for rounding numbers 5 numbers after floating piont{ accurate} :D
@@ -50,16 +50,16 @@ void SolveMatrix(double**A, int N,double * Ans)// A multi dimentional array (mat
 		if ((abs(temp - int(temp))) > 0.5)
 		{
 			if (temp > 0)
-				ANS[i] = ceil(temp);
-			else ANS[i] = floor(temp);
+				Ans[i] = ceil(temp);
+			else Ans[i] = floor(temp);
 		}
 		else {
 			if (temp > 0)
-				ANS[i] = floor(temp);
-			else ANS[i] = ceil(temp);
+				Ans[i] = floor(temp);
+			else Ans[i] = ceil(temp);
 
 		}
-		ANS[i] = ANS[i] / pow(10, 5);
+		Ans[i] = Ans[i] / pow(10, 5);
 	}
 
 	DeallocateMatrix(A, N);
