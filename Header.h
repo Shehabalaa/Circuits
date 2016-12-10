@@ -42,11 +42,11 @@ double GetRin(vector<Node>,int kind,int mark);
 
 //Node Analysis
 
-void GetNodesVoltage(vector<Node>,vector<Node>&);
+void GetNodesVoltage(vector<Node>&);
 
 
 
-//EquationSolver by Shehab :D
+//EquationSolver
 
 void SolveMatrix(double**, int,double*&);
 void swaprows(double**, int, int);

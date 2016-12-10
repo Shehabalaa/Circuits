@@ -1,5 +1,3 @@
-// :D :) :D :) :D :) :D :) :D :) :D :) :D :)
-
 #include"Header.h"
 
 
