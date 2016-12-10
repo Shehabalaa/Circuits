@@ -255,7 +255,7 @@ void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one 
 		unsigned int j = 0;
 		while (j <Nodes[i].J_Sources.size())
 		{
-			if (Nodes[i].J_Sources[j].mark != mark)
+			if (Nodes[i].J_Sources[j].mark != mark&&kind==3)
 			{
 				Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + j);
 				Nodes[i].No_elements--;
@@ -405,7 +405,7 @@ void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one 
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		unsigned int j = 0;
-		while (j <Nodes[i].V_Sources.size())
+		while (j <Nodes[i].V_Sources.size() && kind == 2)
 		{
 			if (Nodes[i].V_Sources[j].mark != mark)
 			{
