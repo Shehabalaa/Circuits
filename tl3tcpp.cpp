@@ -62,7 +62,7 @@ void Input(vector<Node>& Nodes)
 	return;
 
 }
-
+/*
 for (unsigned int i = 0; i < Nodes.size(); i++)
 {
 	for (unsigned int j = 0; j < Nodes[i].J_Sources.size(); j++)
@@ -91,4 +91,4 @@ for (unsigned int i = 0; i < Nodes.size(); i++)
 	cin >> x;
 
 	return 0;
-}
+}*/

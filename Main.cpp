@@ -5,19 +5,11 @@
 
 void main()
 {
-
 	vector<Node> Nodes;
 	Input(Nodes);
-	GetNodesVoltage(Nodes,Nodes);
+	PrintTest(Nodes);
+	//GetNodesVoltage(Nodes,Nodes);
+	double x = GetRin(Nodes,int kind,int mark);
+	
 
-
-
-
-
-
-
-
-
-
-	//PrintTest(Nodes);
 }

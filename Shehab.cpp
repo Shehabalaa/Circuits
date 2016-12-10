@@ -1,6 +1,6 @@
 // equations and Requvilat
 #include "Header.h"
-// circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 2 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit proble set b (5)
+// circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 2 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit problem set b (5)
 
 void GetNodesVoltage(vector<Node>NonOriginal,vector<Node>& Original)
 {
@@ -55,7 +55,7 @@ void GetNodesVoltage(vector<Node>NonOriginal,vector<Node>& Original)
 	//
 
 	double* Ans = NULL;
-	SolveMatrix(Matrix,NonOriginal.size()-1,Ans);
+	SolveMatrix(Matrix,int(NonOriginal.size()-1),Ans);
 
 	unsigned int i = 0;
 	while(i < Original.size()-1)
@@ -68,9 +68,322 @@ void GetNodesVoltage(vector<Node>NonOriginal,vector<Node>& Original)
 	delete[] Ans;
 		//delete later <<<<<<<<<<<<<<-------------------------------
 
-		PrintTest(Original);
+		//PrintTest(Original);
 
 		//
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
+{
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		Nodes[i].No_elements -= int(Nodes[i].J_Sources.size());
+		Nodes[i].J_Sources.clear();
+
+	}
+
+
+	
+
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		bool Temp = true;
+
+		if (kind == 1)
+		{
+			for (unsigned int k = 0; k < Nodes[i].Resistors.size(); k++)
+			{
+				if (mark == Nodes[i].Resistors[k].mark)
+					if (Temp)
+
+					{
+						R r1;
+						r1.mark = 111111;
+						r1.value = 1;
+						Nodes[i].Resistors.push_back(r1);
+						J j1;
+						j1.mark = 111111;
+						j1.value = 1;
+						Nodes[i].J_Sources.push_back(j1);
+
+						Temp = false;
+					}
+					else
+					{
+						R r1;
+						r1.mark = 111111;
+						r1.value = 1;
+						Nodes[i].Resistors.push_back(r1);
+						J j1;
+						j1.mark = 111111;
+						j1.value = -1;
+						Nodes[i].J_Sources.push_back(j1);
+
+					}
+
+
+			}
+
+
+
+		}
+		else if (kind == 2)
+		{
+			for (unsigned int k = 0; k < Nodes[i].V_Sources.size(); k++)
+			{
+				if (Temp)
+
+				{
+					R r1;
+					r1.mark = 111111;
+					r1.value = 1;
+					Nodes[i].Resistors.push_back(r1);
+					J j1;
+					j1.mark = 111111;
+					j1.value = 1;
+					Nodes[i].J_Sources.push_back(j1);
+
+					Temp = false;
+				}
+				else
+				{
+					R r1;
+					r1.mark = 111111;
+					r1.value = 1;
+					Nodes[i].Resistors.push_back(r1);
+					J j1;
+					j1.mark = 111111;
+					j1.value = -1;
+					Nodes[i].J_Sources.push_back(j1);
+
+				}
+			}
+
+
+		}
+		else
+		{
+			
+			
+			if (Temp)
+
+			{
+				R r1;
+				r1.mark = 111111;
+				r1.value = 1;
+				Nodes[i].Resistors.push_back(r1);
+				J j1;
+				j1.mark = 111111;
+				j1.value = 1;
+				Nodes[i].J_Sources.push_back(j1);
+
+				Temp = false;
+			}
+			else
+			{
+				R r1;
+				r1.mark = 111111;
+				r1.value = 1;
+				Nodes[i].Resistors.push_back(r1);
+				J j1;
+				j1.mark = 111111;
+				j1.value = -1;
+				Nodes[i].J_Sources.push_back(j1);
+
+			}
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	bool NewCircuitReady = false;
+	
+	while (!NewCircuitReady)
+	{
+		NewCircuitReady = true;
+		for (unsigned int i = 0; i < Nodes.size(); i++)
+		{
+			
+
+			if (Nodes[i].No_elements == 1)
+			{
+				NewCircuitReady = false;
+
+				if (Nodes[i].Resistors.size() == 1)
+				{
+					for (unsigned int k = 0; k < Nodes.size() - 1; k++)
+					{
+						
+						for (unsigned int D = 0; D < Nodes[(i + 1) % Nodes.size()].Resistors.size(); D++)
+						{
+							if (Nodes[i].Resistors[0].mark == Nodes[(i + 1) % Nodes.size()].Resistors[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(i + 1) % Nodes.size()].No_elements--;
+								Nodes[(i + 1) % Nodes.size()].Resistors.erase(Nodes[(i + 1) % Nodes.size()].Resistors.begin()+D);
+								break;
+							}
+						}
+						if (Nodes[i].No_elements == 0)
+							break;
+					}
+
+				}
+				else if (Nodes[i].J_Sources.size() == 1)
+				{
+
+					for (unsigned int k = 0; k < Nodes.size() - 1; k++)
+					{
+						for (unsigned int D = 0; D < Nodes[(i + 1) % Nodes.size()].J_Sources.size(); D++)
+						{
+							if (Nodes[i].J_Sources[0].mark == Nodes[(i + 1) % Nodes.size()].J_Sources[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(i + 1) % Nodes.size()].No_elements--;
+							}
+						}
+
+					}
+
+				}
+				else if (Nodes[i].V_Sources.size() == 1)
+				{
+					for (unsigned int k = 0; k < Nodes.size() - 1; k++)
+					{
+						for (unsigned int D = 0; D < Nodes[(i + 1) % Nodes.size()].V_Sources.size(); D++)
+						{
+							if (Nodes[i].V_Sources[0].mark == Nodes[(i + 1) % Nodes.size()].V_Sources[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(i + 1) % Nodes.size()].No_elements--;
+							}
+						}
+					}
+
+					
+				}
+
+				
+			}
+
+
+		}
+
+
+	}
+
+
+
+	int Deleted = 0;
+	for (unsigned int i = 0; i <Nodes.size(); i++)
+	{
+		if (Nodes[i].No_elements==0)
+		{
+			Nodes.erase(Nodes.begin() + i - Deleted);
+			Deleted++;
+		}
+	}
+
+
+
+	int Node_A = -1;
+	int Node_B = -1;
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+
+		if (kind == 1)
+		{
+			for (unsigned int k = 0; k < Nodes[i].Resistors.size(); k++)
+			{
+				if (mark == Nodes[i].Resistors[k].mark)
+					if (Node_A == -1)
+						Node_A = i;
+					else
+						Node_B = i;
+			}
+
+
+
+		}
+		else if (kind == 2)
+		{
+			for (unsigned int k = 0; k < Nodes[i].V_Sources.size(); k++)
+			{
+				if (mark == Nodes[i].V_Sources[k].mark)
+					if (Node_A == -1)
+						Node_A = i;
+					else
+						Node_B = i;
+			}
+
+
+		}
+		else
+		{
+			for (unsigned int k = 0; k < Nodes[i].J_Sources.size(); k++)
+			{
+				if (mark == Nodes[i].J_Sources[k].mark)
+				{
+					if (mark == Nodes[i].J_Sources[k].mark)
+						if (Node_A == -1)
+							Node_A = i;
+						else
+							Node_B = i;
+				}
+			}
+
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+	PrintTest(Nodes);
+
+
+		return -1;
+
+
+
+	
+
+}
+
+
+
+
+
+
+

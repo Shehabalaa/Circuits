@@ -38,6 +38,7 @@ struct Node {
 
 void PrintTest(const vector<Node>&);
 void Input(vector<Node>&);
+double GetRin(vector<Node>,int kind,int mark);
 
 //Node Analysis
 
