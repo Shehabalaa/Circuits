@@ -39,6 +39,8 @@ struct Node {
 void PrintTest(const vector<Node>&);
 void Input(vector<Node>&);
 double GetRin(vector<Node>,int kind,int mark);
+void DisableSourcesExceptOne(vector<Node>&, int, int);
+void DeleteDeadNodes(vector<Node>&);
 
 //Node Analysis
 

@@ -8,8 +8,8 @@ void main()
 	vector<Node> Nodes;
 	Input(Nodes);
 	//GetNodesVoltage(Nodes);
-	double Rin = GetRin(Nodes, 1, 7);
-	//cout << endl << Rin << endl;
+	double Rin = GetRin(Nodes, 2, 50);
+    //cout << endl << Rin << endl;
 }
 
 

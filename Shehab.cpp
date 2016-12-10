@@ -52,15 +52,6 @@ void GetNodesVoltage(vector<Node>& Nodes)
 	}
 
 
-	/*//Deleted later <<<<<<<<<<<<<<-------------------------------
-	for (unsigned int i = 0; i < Nodes.size()-1; i++)
-	{
-		for (unsigned int j = 0; j < Nodes.size(); j++)
-			cout << Matrix[i][j] << " ";
-		cout << endl;
-	}
-	//
-	*/
 	double* Ans = NULL;
 	SolveMatrix(Matrix,int(Nodes.size()-1),Ans);
 
@@ -76,216 +67,18 @@ void GetNodesVoltage(vector<Node>& Nodes)
 	swap(Nodes[Ref_Original_index], Nodes[int(Nodes.size() - 1)]);
 
 	delete[] Ans;
-		//delete later <<<<<<<<<<<<<<-------------------------------
-
-		//PrintTest(Nodes);
-
-		//
-	
 
 }
 
 
-
-
-
-
 double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 {
-	// delete all current soruces except if there is one as element of interest
-	for (unsigned int i = 0; i < Nodes.size(); i++) 
-	{
-		unsigned int j = 0;
-		while( j <Nodes[i].J_Sources.size())
-		{
-			if (Nodes[i].J_Sources[j].mark != mark)
-			{
-				Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + j);
-				Nodes[i].No_elements--;
-				continue;
-			}
-
-			j++;
-		}
-	} 
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////////// hyzhr nodes fel hwa hyt3mlha mark wb3d keda ttshatl
-
-	
-	//mark dead nodes nodes fel hwa
-	bool NewCircuitReady = false;
-	while (!NewCircuitReady)
-	{
-		NewCircuitReady = true;
-		for (unsigned int i = 0; i < Nodes.size(); i++)
-		{
+	DisableSourcesExceptOne(Nodes, kind, mark);//disable all sources
 
 
-			if (Nodes[i].No_elements == 1)
-			{
-				NewCircuitReady = false;
-
-				if (Nodes[i].Resistors.size() == 1)
-				{
-					for (unsigned int k = i; k < Nodes.size()-1; k++)
-					{
-						
-						for (unsigned int D = 0; D < Nodes[(k + 1) % Nodes.size()].Resistors.size(); D++)
-						{
-							if (Nodes[i].Resistors[0].mark == Nodes[(k + 1) % Nodes.size()].Resistors[D].mark)
-							{
-								Nodes[i].No_elements = 0;
-								Nodes[(k + 1) % Nodes.size()].No_elements--;
-								Nodes[(k + 1) % Nodes.size()].Resistors.erase(Nodes[(k + 1) % Nodes.size()].Resistors.begin() + D);
-								break;
-							}
-						}
-						if (Nodes[i].No_elements == 0)
-							break;
-
-					}
-
-				}
-				else if (Nodes[i].J_Sources.size() == 1)
-				{
-
-					for (unsigned int k = i; k < Nodes.size() - 1; k++)
-					{
-						for (unsigned int D = 0; D < Nodes[(k + 1) % Nodes.size()].J_Sources.size(); D++)
-						{
-							if (Nodes[i].J_Sources[0].mark == Nodes[(k + 1) % Nodes.size()].J_Sources[D].mark)
-							{
-								Nodes[i].No_elements = 0;
-								Nodes[(k + 1) % Nodes.size()].No_elements--;
-								Nodes[(k + 1) % Nodes.size()].J_Sources.erase(Nodes[(k + 1) % Nodes.size()].J_Sources.begin() + D);
-								break;
-							}
-						}
-
-						if (Nodes[i].No_elements == 0)
-							break;
-					}
-
-				}
-				else if (Nodes[i].V_Sources.size() == 1)
-				{
-					for (unsigned int k = i; k < Nodes.size() - 1; k++)
-					{
-						for (unsigned int D = 0; D < Nodes[(i + 1) % Nodes.size()].V_Sources.size(); D++)
-						{
-							if (Nodes[i].J_Sources[0].mark == Nodes[(k + 1) % Nodes.size()].J_Sources[D].mark)
-							{
-								Nodes[i].No_elements = 0;
-								Nodes[(k + 1) % Nodes.size()].No_elements--;
-								Nodes[(k + 1) % Nodes.size()].V_Sources.erase(Nodes[(k + 1) % Nodes.size()].V_Sources.begin() + D);
-								break;
-							}
-						}
-						if (Nodes[i].No_elements == 0)
-							break;
-					}
-
-
-				}
-
-
-			}
-
-
-		}
-
-
-	}
-
-	// delete on air node
-	for (unsigned int i = 0; i <Nodes.size(); i++)
-	{
-		if (Nodes[i].No_elements == 0)
-		{
-			Nodes.erase(Nodes.begin() + i);
-			continue;
-		}
-		i++;
-	}
-
-	// delete all voltage soruces as short circuit
-
-	for (unsigned int i = 0; i < Nodes.size(); i++)
-	{
-		if (Nodes[i].No_elements == 0)
-			continue;
-		for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
-		{
-			if (Nodes[i].V_Sources[v].mark == mark)
-				continue;
-			for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
-			{
-				if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
-					continue;
-
-				for (unsigned int v2 = 0; v2<Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
-				{
-					if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
-					{
-
-						for (unsigned int CSs = 0; CSs<Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
-						{
-							Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
-							Nodes[i].No_elements++;
-						}
-
-						for (unsigned int Rs = 0; Rs<Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
-						{
-							Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
-							Nodes[i].No_elements++;
-						}
-
-
-						Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
-
-
-					}
-
-				}
-			}
-
-		}
-
-	}
-	unsigned int i = 0;
-		while(i <Nodes.size())
-		{
-			if (Nodes[i].No_elements == 0)
-			{
-				Nodes.erase(Nodes.begin() + i);
-				continue;
-			}
-			i++;
-		}
-
-// delete all voltage soruces except if there is one as element of interest
-		for (unsigned int i = 0; i < Nodes.size(); i++) 
-		{
-			unsigned int j = 0;
-			while (j <Nodes[i].V_Sources.size())
-			{
-				if (Nodes[i].V_Sources[j].mark != mark)
-				{
-					Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + j);
-					Nodes[i].No_elements--;
-					continue;
-				}
-
-				j++;
-			}
-		}
-
-		PrintTest(Nodes);
-
-
-
-	// assig current source andd resistor will help to get rin ass it will equal 1/(vn1-vn2)-1 and delete element of interesr
+	// assig current source and resistor will help to get rin as it will equal 1/(vn1-vn2)-1 and delete element of interes
 	bool Temp = true;
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
@@ -361,7 +154,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 					j1.mark = 111111;
 					j1.value = -1;
 					Nodes[i].J_Sources.push_back(j1);
-					Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + k); // delete element of interesr
+					Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + k); // delete element of interes
 					Nodes[i].No_elements++;
 				}
 			}
@@ -384,7 +177,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 					j1.mark = 111111;
 					j1.value = 1;
 					Nodes[i].J_Sources.push_back(j1);
-					Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + k); // delete element of interesr
+					Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + k); // delete element of interes
 					Temp = false;
 					Nodes[i].No_elements++;
 				}
@@ -398,7 +191,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 					j1.mark = 111111;
 					j1.value = -1;
 					Nodes[i].J_Sources.push_back(j1);
-					Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + k); // delete element of interesr
+					Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + k); // delete element of interes
 					Nodes[i].No_elements++;
 				}
 			}
@@ -413,27 +206,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 
 
 
-
-
-
-
-
-
-	for (unsigned int i = 0; i <Nodes.size(); i++)
-	{
-		if (Nodes[i].No_elements==0)
-		{
-			Nodes.erase(Nodes.begin() + i);
-			continue;
-		}
-		i++;
-	}
-
-
-
-
-//	PrintTest(Nodes);
-
+	// get two nodes conected to element of interest
 	int Node_A = -1;
 	int Node_B = -1;
 	mark = 111111;
@@ -474,8 +247,191 @@ return Rin;
 }
 
 
+void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one can be element of interst in Rin  or a source in superpostion
+{
+	// delete all current soruces except if there is one as element of interest
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		unsigned int j = 0;
+		while (j <Nodes[i].J_Sources.size())
+		{
+			if (Nodes[i].J_Sources[j].mark != mark)
+			{
+				Nodes[i].J_Sources.erase(Nodes[i].J_Sources.begin() + j);
+				Nodes[i].No_elements--;
+				continue;
+			}
+
+			j++;
+		}
+	}
+
+	// Mark Nodes connected wth air to delete them :D
+	bool NewCircuitReady = false;
+	while (!NewCircuitReady)
+	{
+		NewCircuitReady = true;
+		for (unsigned int i = 0; i < Nodes.size(); i++)
+		{
 
 
+			if (Nodes[i].No_elements == 1)
+			{
+				NewCircuitReady = false;
+
+				if (Nodes[i].Resistors.size() == 1)
+				{
+					for (unsigned int k = i; k < Nodes.size() - 1; k++)
+					{
+
+						for (unsigned int D = 0; D < Nodes[(k + 1) % Nodes.size()].Resistors.size(); D++)
+						{
+							if (Nodes[i].Resistors[0].mark == Nodes[(k + 1) % Nodes.size()].Resistors[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(k + 1) % Nodes.size()].No_elements--;
+								Nodes[(k + 1) % Nodes.size()].Resistors.erase(Nodes[(k + 1) % Nodes.size()].Resistors.begin() + D);
+								break;
+							}
+						}
+						if (Nodes[i].No_elements == 0)
+							break;
+
+					}
+
+				}
+				else if (Nodes[i].J_Sources.size() == 1)
+				{
+
+					for (unsigned int k = i; k < Nodes.size() - 1; k++)
+					{
+						for (unsigned int D = 0; D < Nodes[(k + 1) % Nodes.size()].J_Sources.size(); D++)
+						{
+							if (Nodes[i].J_Sources[0].mark == Nodes[(k + 1) % Nodes.size()].J_Sources[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(k + 1) % Nodes.size()].No_elements--;
+								Nodes[(k + 1) % Nodes.size()].J_Sources.erase(Nodes[(k + 1) % Nodes.size()].J_Sources.begin() + D);
+								break;
+							}
+						}
+
+						if (Nodes[i].No_elements == 0)
+							break;
+					}
+
+				}
+				else if (Nodes[i].V_Sources.size() == 1)
+				{
+					for (unsigned int k = i; k < Nodes.size() - 1; k++)
+					{
+						for (unsigned int D = 0; D < Nodes[(i + 1) % Nodes.size()].V_Sources.size(); D++)
+						{
+							if (Nodes[i].J_Sources[0].mark == Nodes[(k + 1) % Nodes.size()].J_Sources[D].mark)
+							{
+								Nodes[i].No_elements = 0;
+								Nodes[(k + 1) % Nodes.size()].No_elements--;
+								Nodes[(k + 1) % Nodes.size()].V_Sources.erase(Nodes[(k + 1) % Nodes.size()].V_Sources.begin() + D);
+								break;
+							}
+						}
+						if (Nodes[i].No_elements == 0)
+							break;
+					}
 
 
+				}
 
+
+			}
+
+
+		}
+
+
+	}
+
+	//Delete Nodes connected wth air
+	DeleteDeadNodes(Nodes);
+
+	// delete all voltage soruces as short circuit
+	// 2 steps firstly adjust nodes some (nodes will be marked then deleted)
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		if (Nodes[i].No_elements == 0)
+			continue;
+		for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
+		{
+			if (Nodes[i].V_Sources[v].mark == mark)
+				continue;
+			for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
+			{
+				if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
+					continue;
+
+				for (unsigned int v2 = 0; v2<Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
+				{
+					if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
+					{
+
+						for (unsigned int CSs = 0; CSs<Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
+						{
+							Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
+							Nodes[i].No_elements++;
+						}
+
+						for (unsigned int Rs = 0; Rs<Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
+						{
+							Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
+							Nodes[i].No_elements++;
+						}
+
+
+						Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
+
+
+					}
+
+				}
+			}
+
+		}
+
+	}
+
+	DeleteDeadNodes(Nodes); //delte nodes -> look at line 362
+	// secondly:
+	// delete all voltage soruces except if there is one as element of interest
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		unsigned int j = 0;
+		while (j <Nodes[i].V_Sources.size())
+		{
+			if (Nodes[i].V_Sources[j].mark != mark)
+			{
+				Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + j);
+				Nodes[i].No_elements--;
+				continue;
+			}
+
+			j++;
+		}
+	}
+
+}
+
+
+void DeleteDeadNodes(vector<Node>& Nodes) // will delete any nodes marked before as they become disconnet with circuit
+{
+	unsigned int i = 0;
+	while (i <Nodes.size())
+	{
+		if (Nodes[i].No_elements == 0)
+		{
+			Nodes.erase(Nodes.begin() + i);
+			continue;
+		}
+		i++;
+	}
+
+}
