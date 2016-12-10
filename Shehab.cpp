@@ -95,7 +95,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 	}
 
 
-	
+	// assig current source andd resistor will help to get rin ass it will equal 1/(vn1-vn2)-1
 
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
@@ -212,14 +212,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 
 
 
-
-
-
-
-
-
-
-
+//delete dead nodes nodes fe hwa
 
 	bool NewCircuitReady = false;
 	
@@ -309,10 +302,11 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 		}
 	}
 
-
+	PrintTest(Nodes);
 
 	int Node_A = -1;
 	int Node_B = -1;
+	mark = 111111;
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 
