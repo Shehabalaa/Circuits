@@ -30,6 +30,7 @@ struct Node {
 	vector<J> J_Sources;
 	bool ref;
 	double NodeVoltage;
+	int mark;
 	int No_elements;
 };
 
@@ -38,13 +39,15 @@ struct Node {
 
 void PrintTest(const vector<Node>&);
 void Input(vector<Node>&);
-double GetRin(vector<Node>,int kind,int mark);
+double GetRin(vector<Node>,int,int);
 void DisableSourcesExceptOne(vector<Node>&, int, int);
 void DeleteDeadNodes(vector<Node>&);
+void voltage_to_current(vector<Node>&,int);
+
 
 //Node Analysis
 
-void GetNodesVoltage(vector<Node>&);
+void GetNodesVoltage(vector<Node>,vector<Node>&);
 
 
 

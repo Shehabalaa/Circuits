@@ -1,48 +1,55 @@
 // equations and Requvilat
 #include "Header.h"
 // circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 3 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit problem set b (5)
-
-void GetNodesVoltage(vector<Node>& Nodes)
+// circuit input test 5 1 7 5 3 1 4 1 3 4 0 1 3 4 1 2 1 3 2 10 0 1 2 1 3 2 -10 1 1 2 1 4 40 0 1 4 40 2 20 10 0 2 20 -10 1 7 5 3 1 -4 1 1 2 0  circuit problem set b last one
+void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
 {
-	double** Matrix = new double*[int(Nodes.size())-1];
-	for (unsigned int i = 0; i < Nodes.size() - 1; i++)
-		Matrix[i] = new double[int(Nodes.size())];
 
-	for (unsigned int i = 0; i < Nodes.size()-1; i++)
-		for (unsigned int j = 0; j < Nodes.size(); j++)
+	for (unsigned int i = 0; i < FakeNodes.size() ; i++)
+		for (unsigned int j = 0; j < FakeNodes[i].V_Sources.size(); j++)
+			voltage_to_current(FakeNodes,FakeNodes[i].V_Sources[j].mark);
+
+	DeleteDeadNodes(FakeNodes);
+
+	double** Matrix = new double*[int(FakeNodes.size())-1];
+	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
+		Matrix[i] = new double[int(FakeNodes.size())];
+
+	for (unsigned int i = 0; i < FakeNodes.size()-1; i++)
+		for (unsigned int j = 0; j < FakeNodes.size(); j++)
 			Matrix[i][j] = 0;
 
 	int Ref_Original_index;
-	for (unsigned int i = 0; i < Nodes.size(); i++) // put ref node at last nad save it index to birng it back
+	for (unsigned int i = 0; i < FakeNodes.size(); i++) // put ref node at last nad save it index to birng it back
 	{
-		if (Nodes[i].ref)
+		if (FakeNodes[i].ref)
 		{
 			Ref_Original_index = i;
-			swap(Nodes[i], Nodes[int(Nodes.size() - 1)]);
+			swap(FakeNodes[i], FakeNodes[int(FakeNodes.size() - 1)]);
 		}
 	}
 
 
 
 	unsigned int k = 0;
-	while (k < Nodes.size()-1)//first node compare with others
+	while (k < FakeNodes.size()-1)//first node compare with others
 	{
 	
-		for (unsigned int S = 0; S < Nodes[k].Resistors.size(); S++) //Sum Rs connectod to node
-			Matrix[k][k] += 1/Nodes[k].Resistors[S].value;
+		for (unsigned int S = 0; S < FakeNodes[k].Resistors.size(); S++) //Sum Rs connectod to node
+			Matrix[k][k] += 1/FakeNodes[k].Resistors[S].value;
 
-		for (unsigned int S = 0; S < Nodes[k].J_Sources.size(); S++) //Sum Rs connectod to node
-			Matrix[k][Nodes.size()-1] += Nodes[k].J_Sources[S].value;
+		for (unsigned int S = 0; S < FakeNodes[k].J_Sources.size(); S++) //Sum Rs connectod to node
+			Matrix[k][FakeNodes.size()-1] += FakeNodes[k].J_Sources[S].value;
 
-		for (unsigned int i = k; i < Nodes.size() - 2; i++)
+		for (unsigned int i = k; i < FakeNodes.size() - 2; i++)
 		{
-			for (unsigned int D = 0; D < Nodes[k].Resistors.size(); D++)
+			for (unsigned int D = 0; D < FakeNodes[k].Resistors.size(); D++)
 			{
-				for (unsigned int P = 0; P < Nodes[((i + 1) % Nodes.size())].Resistors.size(); P++)
-					if (Nodes[k].Resistors[D].mark == Nodes[((i + 1) % Nodes.size())].Resistors[P].mark)
+				for (unsigned int P = 0; P < FakeNodes[((i + 1) % FakeNodes.size())].Resistors.size(); P++)
+					if (FakeNodes[k].Resistors[D].mark == FakeNodes[((i + 1) % FakeNodes.size())].Resistors[P].mark)
 					{
-						Matrix[k][(i + 1) % Nodes.size()] -= 1/Nodes[k].Resistors[D].value;
-						Matrix[(i + 1) % Nodes.size()][k] = Matrix[k][(i + 1) % Nodes.size()];
+						Matrix[k][(i + 1) % FakeNodes.size()] -= 1/FakeNodes[k].Resistors[D].value;
+						Matrix[(i + 1) % FakeNodes.size()][k] = Matrix[k][(i + 1) % FakeNodes.size()];
 					}
 
 			}
@@ -53,19 +60,20 @@ void GetNodesVoltage(vector<Node>& Nodes)
 
 
 	double* Ans = NULL;
-	SolveMatrix(Matrix,int(Nodes.size()-1),Ans);
+	SolveMatrix(Matrix,int(FakeNodes.size()-1),Ans);
 
-	unsigned int i = 0;
-	while(i < Nodes.size()-1)
+	for (unsigned int i = 0; i < FakeNodes.size() - 1;i++)
 	{
-	
-		Nodes[i].NodeVoltage = Ans[i];
-		i++;
+		for (unsigned int j = 0; j < Nodes.size(); j++)
+		{
+			if (FakeNodes[i].mark == Nodes[j].mark)
+				Nodes[j].NodeVoltage = Ans[i];
+
+		}
+
 	}
 
-
-	swap(Nodes[Ref_Original_index], Nodes[int(Nodes.size() - 1)]);
-
+	PrintTest(Nodes);
 	delete[] Ans;
 
 }
@@ -227,7 +235,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 
 	Nodes[Node_B].ref = true;
 
-	GetNodesVoltage(Nodes);
+	GetNodesVoltage(Nodes, Nodes);
 	double Rin = 1/(Nodes[Node_A].NodeVoltage- 1);
 	if (Rin < 0)
 		Rin*=-1;
