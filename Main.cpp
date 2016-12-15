@@ -7,7 +7,8 @@ void main()
 {
 	vector<Node> Nodes;
 	Input(Nodes);
-	GetNodesVoltage(Nodes, Nodes);
+	GetNodesVoltage(Nodes);
+	PrintTest(Nodes);
 	//double Rin = GetRin(Nodes, 2, 50);
     //cout << endl << Rin << endl;
 }

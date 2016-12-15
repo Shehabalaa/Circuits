@@ -97,7 +97,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 	x = false;
 	for (unsigned int i = 0; i < nodes.size(); i++)
 	{
-		if (nodes[i].No_elements == 0)
+		if (nodes[i].No_elements == 0|| i == n1)
 		{
 			continue;
 		}
@@ -105,7 +105,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 		{
 
 
-			if (nodes[i].V_Sources[j].mark == mark && i != n1)
+			if (nodes[i].V_Sources[j].mark == mark)
 			{
 
 				n2 = i;
@@ -119,7 +119,6 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 
 	}
 
-
 	if (nodes[n2].No_elements == 2 && nodes[n2].Resistors.size() == 1)
 	{
 		r1 = nodes[n2].Resistors[0].mark;
@@ -127,7 +126,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 		x = false;
 		for (unsigned int i = 0; i < nodes.size(); i++)
 		{
-			if (nodes[i].No_elements == 0)
+			if (nodes[i].No_elements == 0||i==n2)
 			{
 				continue;
 			}
@@ -161,8 +160,19 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 		nodes[n2].No_elements = 0;
 		nodes[n1].J_Sources.push_back(j_source);
 		nodes[n1].Resistors.push_back(r);
+		j_source.value *= -1;
 		nodes[n3].J_Sources.push_back(j_source);
 
+		for (unsigned int k = 0;k < nodes[n1].V_Sources.size();k++)
+		{
+			if (nodes[n1].V_Sources[k].mark == mark)
+			{
+				nodes[n1].V_Sources.erase(nodes[n1].V_Sources.begin() + k);
+				break;
+			}
+		}
+		nodes[n1].No_elements++;
+		nodes[n3].No_elements++;
 	}
 
 
@@ -208,8 +218,21 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 		j_source.mark = n2*10 + n3;
 		nodes[n1].No_elements = 0;
 		nodes[n3].J_Sources.push_back(j_source);
-		nodes[n2].Resistors.push_back(r);
+		j_source.value *= -1;
 		nodes[n2].J_Sources.push_back(j_source);
+		nodes[n2].Resistors.push_back(r);
+
+
+		for (unsigned int k = 0;k < nodes[n2].V_Sources.size();k++)
+		{
+			if (nodes[n2].V_Sources[k].mark == mark)
+			{
+				nodes[n2].V_Sources.erase(nodes[n2].V_Sources.begin() + k);
+				break;
+			}
+		}
+		nodes[n2].No_elements++;
+		nodes[n3].No_elements++;
 
 	}
 }

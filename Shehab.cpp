@@ -2,20 +2,25 @@
 #include "Header.h"
 // circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 3 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit problem set b (5)
 // circuit input test 5 1 7 5 3 1 4 1 3 4 0 1 3 4 1 2 1 3 2 10 0 1 2 1 3 2 -10 1 1 2 1 4 40 0 1 4 40 2 20 10 0 2 20 -10 1 7 5 3 1 -4 1 1 2 0  circuit problem set b last one
-void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
-{
 
-	for (unsigned int i = 0; i < FakeNodes.size() ; i++)
+void GetNodesVoltage(vector<Node>& Nodes)
+{
+	vector<Node>FakeNodes = Nodes;
+	for (unsigned int i = 0; i < FakeNodes.size(); i++)
+	{
+		if (FakeNodes[i].No_elements == 0)
+			continue;
 		for (unsigned int j = 0; j < FakeNodes[i].V_Sources.size(); j++)
-			voltage_to_current(FakeNodes,FakeNodes[i].V_Sources[j].mark);
+			voltage_to_current(FakeNodes, FakeNodes[i].V_Sources[j].mark);
+	}
 
 	DeleteDeadNodes(FakeNodes);
 
-	double** Matrix = new double*[int(FakeNodes.size())-1];
+	double** Matrix = new double*[int(FakeNodes.size()) - 1];
 	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
 		Matrix[i] = new double[int(FakeNodes.size())];
 
-	for (unsigned int i = 0; i < FakeNodes.size()-1; i++)
+	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
 		for (unsigned int j = 0; j < FakeNodes.size(); j++)
 			Matrix[i][j] = 0;
 
@@ -32,14 +37,14 @@ void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
 
 
 	unsigned int k = 0;
-	while (k < FakeNodes.size()-1)//first node compare with others
+	while (k < FakeNodes.size() - 1)//first node compare with others
 	{
-	
+
 		for (unsigned int S = 0; S < FakeNodes[k].Resistors.size(); S++) //Sum Rs connectod to node
-			Matrix[k][k] += 1/FakeNodes[k].Resistors[S].value;
+			Matrix[k][k] += 1 / FakeNodes[k].Resistors[S].value;
 
 		for (unsigned int S = 0; S < FakeNodes[k].J_Sources.size(); S++) //Sum Rs connectod to node
-			Matrix[k][FakeNodes.size()-1] += FakeNodes[k].J_Sources[S].value;
+			Matrix[k][FakeNodes.size() - 1] += FakeNodes[k].J_Sources[S].value;
 
 		for (unsigned int i = k; i < FakeNodes.size() - 2; i++)
 		{
@@ -48,7 +53,7 @@ void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
 				for (unsigned int P = 0; P < FakeNodes[((i + 1) % FakeNodes.size())].Resistors.size(); P++)
 					if (FakeNodes[k].Resistors[D].mark == FakeNodes[((i + 1) % FakeNodes.size())].Resistors[P].mark)
 					{
-						Matrix[k][(i + 1) % FakeNodes.size()] -= 1/FakeNodes[k].Resistors[D].value;
+						Matrix[k][(i + 1) % FakeNodes.size()] -= 1 / FakeNodes[k].Resistors[D].value;
 						Matrix[(i + 1) % FakeNodes.size()][k] = Matrix[k][(i + 1) % FakeNodes.size()];
 					}
 
@@ -60,7 +65,7 @@ void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
 
 
 	double* Ans = NULL;
-	SolveMatrix(Matrix,int(FakeNodes.size()-1),Ans);
+	SolveMatrix(Matrix, int(FakeNodes.size() - 1), Ans);
 
 	for (unsigned int i = 0; i < FakeNodes.size() - 1;i++)
 	{
@@ -73,8 +78,12 @@ void GetNodesVoltage(vector<Node>FakeNodes,vector<Node>& Nodes)
 
 	}
 
-	PrintTest(Nodes);
 	delete[] Ans;
+
+	for (unsigned int i = 0; i < Nodes.size() - 1; i++) // assign voltage to non essential nodes
+		if (Nodes[i].NodeVoltage == 0)
+			Nodes[i].NodeVoltage = Nodes[i].V_Sources[0].value + Nodes[GetSecondNode(Nodes,i,2, Nodes[i].V_Sources[0].mark)].NodeVoltage;
+
 
 }
 
@@ -235,7 +244,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 
 	Nodes[Node_B].ref = true;
 
-	GetNodesVoltage(Nodes, Nodes);
+	GetNodesVoltage(Nodes);
 	double Rin = 1/(Nodes[Node_A].NodeVoltage- 1);
 	if (Rin < 0)
 		Rin*=-1;
@@ -274,7 +283,93 @@ void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one 
 		}
 	}
 
-	// Mark Nodes connected wth air to delete them :D
+
+		DeleteDeadBranches(Nodes);
+
+	// delete all voltage soruces as short circuit
+	// 2 steps firstly adjust nodes some (nodes will be marked then deleted)
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		if (Nodes[i].No_elements == 0)
+			continue;
+		for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
+		{
+			if (Nodes[i].V_Sources[v].mark == mark)
+				continue;
+			for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
+			{
+				if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
+					continue;
+
+				for (unsigned int v2 = 0; v2<Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
+				{
+					if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
+					{
+
+						for (unsigned int CSs = 0; CSs<Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
+						{
+							Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
+							Nodes[i].No_elements++;
+						}
+
+						for (unsigned int Rs = 0; Rs<Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
+						{
+							Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
+							Nodes[i].No_elements++;
+						}
+
+
+						Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
+
+
+					}
+
+				}
+			}
+
+		}
+
+	}
+
+	DeleteDeadNodes(Nodes); //delte nodes -> look at line 362
+	// secondly:
+	// delete all voltage soruces except if there is one as element of interest
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		unsigned int j = 0;
+		while (j <Nodes[i].V_Sources.size() && kind == 2)
+		{
+			if (Nodes[i].V_Sources[j].mark != mark)
+			{
+				Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + j);
+				Nodes[i].No_elements--;
+				continue;
+			}
+
+			j++;
+		}
+	}
+
+}
+
+
+void DeleteDeadNodes(vector<Node>& Nodes) // will delete any nodes marked before as they become disconnet with circuit
+{
+	unsigned int i = 0;
+	while (i <Nodes.size())
+	{
+		if (Nodes[i].No_elements == 0)
+		{
+			Nodes.erase(Nodes.begin() + i);
+			continue;
+		}
+		i++;
+	}
+
+}
+
+void DeleteDeadBranches(vector<Node>& Nodes)
+{	// Mark Nodes connected wth air to delete them :D
 	bool NewCircuitReady = false;
 	while (!NewCircuitReady)
 	{
@@ -360,86 +455,37 @@ void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one 
 	}
 
 	//Delete Nodes connected wth air
-	DeleteDeadNodes(Nodes);
+	DeleteDeadNodes(Nodes);}
 
-	// delete all voltage soruces as short circuit
-	// 2 steps firstly adjust nodes some (nodes will be marked then deleted)
-	for (unsigned int i = 0; i < Nodes.size(); i++)
-	{
-		if (Nodes[i].No_elements == 0)
-			continue;
-		for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
-		{
-			if (Nodes[i].V_Sources[v].mark == mark)
-				continue;
-			for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
-			{
-				if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
-					continue;
-
-				for (unsigned int v2 = 0; v2<Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
-				{
-					if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
-					{
-
-						for (unsigned int CSs = 0; CSs<Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
-						{
-							Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
-							Nodes[i].No_elements++;
-						}
-
-						for (unsigned int Rs = 0; Rs<Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
-						{
-							Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
-							Nodes[i].No_elements++;
-						}
-
-
-						Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
-
-
-					}
-
-				}
-			}
-
-		}
-
-	}
-
-	DeleteDeadNodes(Nodes); //delte nodes -> look at line 362
-	// secondly:
-	// delete all voltage soruces except if there is one as element of interest
-	for (unsigned int i = 0; i < Nodes.size(); i++)
-	{
-		unsigned int j = 0;
-		while (j <Nodes[i].V_Sources.size() && kind == 2)
-		{
-			if (Nodes[i].V_Sources[j].mark != mark)
-			{
-				Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + j);
-				Nodes[i].No_elements--;
-				continue;
-			}
-
-			j++;
-		}
-	}
-
-}
-
-
-void DeleteDeadNodes(vector<Node>& Nodes) // will delete any nodes marked before as they become disconnet with circuit
+int GetSecondNode(const vector<Node>& Nodes,int Node1_index,int kind,int mark)
 {
-	unsigned int i = 0;
-	while (i <Nodes.size())
+	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
-		if (Nodes[i].No_elements == 0)
-		{
-			Nodes.erase(Nodes.begin() + i);
+		if (i == Node1_index)
 			continue;
-		}
-		i++;
-	}
 
+		if (kind == 1)
+			for (unsigned int j = 0; j < Nodes[i].Resistors.size(); j++)
+			{
+				if (Nodes[i].Resistors[j].mark == mark)
+					return i;
+			}
+
+		else if (kind ==2)
+			for (unsigned int j = 0; j < Nodes[i].V_Sources.size(); j++)
+			{
+				if (Nodes[i].V_Sources[j].mark == mark)
+					return i;
+			}
+		else
+		{
+			for (unsigned int j = 0; j < Nodes[i].J_Sources.size(); j++)
+			{
+				if (Nodes[i].J_Sources[j].mark == mark)
+					return i;
+			}
+		}
+
+
+	}
 }

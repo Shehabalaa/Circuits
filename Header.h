@@ -43,11 +43,12 @@ double GetRin(vector<Node>,int,int);
 void DisableSourcesExceptOne(vector<Node>&, int, int);
 void DeleteDeadNodes(vector<Node>&);
 void voltage_to_current(vector<Node>&,int);
-
+void DeleteDeadBranches(vector<Node>& Nodes);
+int GetSecondNode(const vector<Node>&, int, int, int);
 
 //Node Analysis
 
-void GetNodesVoltage(vector<Node>,vector<Node>&);
+void GetNodesVoltage(vector<Node>&);
 
 
 
