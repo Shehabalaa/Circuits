@@ -28,7 +28,7 @@ void Input(vector<Node>& Nodes)
 			if (choice == 1)
 			{
 				R resistor;
-				cout << "Resistor_num = ";
+				cout << "Resistor_mark = ";
 				cin >> resistor.mark;
 				cout << "Resistance_value =  ";
 				cin >> resistor.value;
@@ -37,7 +37,7 @@ void Input(vector<Node>& Nodes)
 			else if (choice == 2)
 			{
 				E V_sources;
-				cout << "Voltage Source_num = ";
+				cout << "Voltage Source_mark = ";
 				cin >> V_sources.mark;
 				cout << "Voltage Source_value =  ";
 				cin >> V_sources.value;
@@ -46,7 +46,7 @@ void Input(vector<Node>& Nodes)
 			else if (choice == 3)
 			{
 				J J_Source;
-				cout << "Current Source_num = ";
+				cout << "Current Source_mark = ";
 				cin >> J_Source.mark;
 				cout << "Current Source_value =  ";
 				cin >> J_Source.value;

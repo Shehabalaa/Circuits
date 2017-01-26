@@ -45,6 +45,9 @@ void DeleteDeadNodes(vector<Node>&);
 void voltage_to_current(vector<Node>&,int);
 void DeleteDeadBranches(vector<Node>& Nodes);
 int GetSecondNode(const vector<Node>&, int, int, int);
+void GetTwoNodesConnectedWith(const vector<Node>&,int,int,int&,int&);
+void EquvilantCircuit(const vector<Node>&,int,int,int);
+
 
 //Node Analysis
 
@@ -60,14 +63,5 @@ void DeallocateMatrix(double**, int);
 
 
 //
-
-
-
-
-
-
-
-
-
 
 

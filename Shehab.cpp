@@ -16,6 +16,7 @@ void GetNodesVoltage(vector<Node>& Nodes)
 
 	DeleteDeadNodes(FakeNodes);
 
+
 	double** Matrix = new double*[int(FakeNodes.size()) - 1];
 	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
 		Matrix[i] = new double[int(FakeNodes.size())];
@@ -83,7 +84,6 @@ void GetNodesVoltage(vector<Node>& Nodes)
 	for (unsigned int i = 0; i < Nodes.size() - 1; i++) // assign voltage to non essential nodes
 		if (Nodes[i].NodeVoltage == 0)
 			Nodes[i].NodeVoltage = Nodes[i].V_Sources[0].value + Nodes[GetSecondNode(Nodes,i,2, Nodes[i].V_Sources[0].mark)].NodeVoltage;
-
 
 }
 
@@ -489,3 +489,129 @@ int GetSecondNode(const vector<Node>& Nodes,int Node1_index,int kind,int mark)
 
 	}
 }
+
+
+void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &N1,int &N2)
+{
+	N1 = -1; ////
+	N2 = -1; ////
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		if (kind == 1)
+			for (unsigned int j = 0; j < Nodes[i].Resistors.size(); j++)
+			{
+				if (Nodes[i].Resistors[j].mark == mark)
+				{
+					if (N1 == -1)
+						N1 = i;
+					else
+						N2 = i;
+				}
+				
+			}
+
+		else if (kind == 2)
+			for (unsigned int j = 0; j < Nodes[i].V_Sources.size(); j++)
+			{
+				if (Nodes[i].V_Sources[j].mark == mark)
+				{
+					if (N1 == -1)
+						N1 = i;
+					else
+						N2 = i;
+				}
+
+			}
+		else
+		{
+			for (unsigned int j = 0; j < Nodes[i].J_Sources.size(); j++)
+			{
+				if (Nodes[i].J_Sources[j].mark == mark)
+				{
+					if (N1 == -1)
+						N1 = i;
+					else
+						N2 = i;
+				}
+
+			}
+		}
+
+
+	}
+
+	cout << N1 << endl << N2;
+
+
+}
+
+void EquvilantCircuit(const vector<Node>& Nodes,int Choice,int kind,int mark)
+{
+	/*choice have 5 
+	1.Getting Vth only and show it on screen
+	2.Getting Inorton only and show it on screen
+	3.Getting Rin Getting Inorton only and show it on screen
+	4.Simple Draw for EquvilantCircuit on screen (Thevinin)
+	5.Simple Draw for EquvilantCircuit on screen (Norton)
+
+	*/
+	//next 3 statments neccessary in all cases
+	double Rin = GetRin(Nodes, kind, mark);
+	int N1, N2;
+	GetTwoNodesConnectedWith(Nodes, kind, mark, N1, N2);
+	//end
+
+	if (Choice == 3)
+	{
+		cout << Rin << endl;
+		return;
+	}
+
+	
+
+
+
+	double I
+
+
+	int Current;
+	if (mark == 1)
+	{
+		for (unsigned int i = 0;i < Nodes[i].Resistors.size();i++)
+		{
+
+		}
+
+	}
+	else if (mark == 2)
+	{
+
+	}
+	else
+	{
+
+		
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+double SuperPosition();
