@@ -1,14 +1,16 @@
 #include"Header.h"
 
 
-
-
-void PrintTest(const vector<Node>& vec1)
+void PrintTest(const vector<Node>& vec1,bool specialprint)
 {
 
 	for (unsigned int i = 0; i < vec1.size(); i++)
 	{
-		cout << "Node" << i + 1 << endl;
+		cout << "Node" << i + 1;
+		if (vec1[i].ref)
+			cout << "---> " << "GroundNode(Ref.)\n";
+		else
+			cout << endl;
 
 		if (vec1[i].No_elements == 0)
 		{
@@ -40,8 +42,11 @@ void PrintTest(const vector<Node>& vec1)
 			cout << vec1[i].V_Sources[k].mark << "  " << vec1[i].V_Sources[k].value;
 			cout << endl;
 		}
-		cout << "NodeVoltage: ";
-		cout << vec1[i].NodeVoltage <<endl;
+		if (specialprint)
+		{
+			cout << "NodeVoltage: ";
+			cout << vec1[i].NodeVoltage << endl;
+		}
 		cout << "N_elemnts: " <<vec1[i].No_elements<< endl;
 		cout << "--------------------------------------------------------------------\n";
 

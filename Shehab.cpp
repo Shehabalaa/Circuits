@@ -3,8 +3,12 @@
 // circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 3 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit problem set b (5)
 // circuit input test 5 1 7 5 3 1 4 1 3 4 0 1 3 4 1 2 1 3 2 10 0 1 2 1 3 2 -10 1 1 2 1 4 40 0 1 4 40 2 20 10 0 2 20 -10 1 7 5 3 1 -4 1 1 2 0  circuit problem set b last one
 
-void GetNodesVoltage(vector<Node>& Nodes)
+extern int Ref_index;
+
+
+void GetNodesVoltage(vector<Node>& Nodes )// always selecting last node as ref(GroundNode) then adjust all node voltage
 {
+
 	vector<Node>FakeNodes = Nodes;
 	for (unsigned int i = 0; i < FakeNodes.size(); i++)
 	{
@@ -25,8 +29,8 @@ void GetNodesVoltage(vector<Node>& Nodes)
 		for (unsigned int j = 0; j < FakeNodes.size(); j++)
 			Matrix[i][j] = 0;
 
-	int Ref_Original_index;
-	for (unsigned int i = 0; i < FakeNodes.size(); i++) // put ref node at last nad save it index to birng it back
+	/*int Ref_Original_index;
+	for (unsigned int i = 0; i < FakeNodes.size(); i++) // put ref node at last and save its index to birng it back
 	{
 		if (FakeNodes[i].ref)
 		{
@@ -34,7 +38,7 @@ void GetNodesVoltage(vector<Node>& Nodes)
 			swap(FakeNodes[i], FakeNodes[int(FakeNodes.size() - 1)]);
 		}
 	}
-
+	*/
 
 
 	unsigned int k = 0;
@@ -66,9 +70,10 @@ void GetNodesVoltage(vector<Node>& Nodes)
 
 
 	double* Ans = NULL;
-	SolveMatrix(Matrix, int(FakeNodes.size() - 1), Ans);
 
-	for (unsigned int i = 0; i < FakeNodes.size() - 1;i++)
+	SolveMatrix(Matrix, int(FakeNodes.size() - 1), Ans); // solve equations
+
+	for (unsigned int i = 0; i < FakeNodes.size() - 1;i++) // assign voltage to essential nodes
 	{
 		for (unsigned int j = 0; j < Nodes.size(); j++)
 		{
@@ -85,6 +90,14 @@ void GetNodesVoltage(vector<Node>& Nodes)
 		if (Nodes[i].NodeVoltage == 0)
 			Nodes[i].NodeVoltage = Nodes[i].V_Sources[0].value + Nodes[GetSecondNode(Nodes,i,2, Nodes[i].V_Sources[0].mark)].NodeVoltage;
 
+	PrintTest(Nodes, 1);
+	//assing all nodes Voltage according to orignal reference or last node as ref
+	double V = Nodes[Ref_index].NodeVoltage;
+	for (unsigned int i = 0; i < Nodes.size(); i++) // adjust all nodes due to ref node
+	{
+		Nodes[i].NodeVoltage -= V;
+	}
+	
 }
 
 
@@ -488,6 +501,7 @@ int GetSecondNode(const vector<Node>& Nodes,int Node1_index,int kind,int mark)
 
 
 	}
+	return -1;
 }
 
 
@@ -505,7 +519,10 @@ void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &
 					if (N1 == -1)
 						N1 = i;
 					else
+					{
 						N2 = i;
+						return;
+					}
 				}
 				
 			}
@@ -518,7 +535,10 @@ void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &
 					if (N1 == -1)
 						N1 = i;
 					else
+					{
 						N2 = i;
+						return;
+					}
 				}
 
 			}
@@ -531,7 +551,10 @@ void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &
 					if (N1 == -1)
 						N1 = i;
 					else
+					{
 						N2 = i;
+						return;
+					}
 				}
 
 			}
@@ -539,9 +562,6 @@ void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &
 
 
 	}
-
-	cout << N1 << endl << N2;
-
 
 }
 
@@ -571,10 +591,10 @@ void EquvilantCircuit(const vector<Node>& Nodes,int Choice,int kind,int mark)
 
 
 
-	double I
+//	double I;
 
 
-	int Current;
+	//int Current;
 	if (mark == 1)
 	{
 		for (unsigned int i = 0;i < Nodes[i].Resistors.size();i++)
@@ -601,17 +621,20 @@ void EquvilantCircuit(const vector<Node>& Nodes,int Choice,int kind,int mark)
 
 
 
-
-
-
-
-
-
-
-
-
-
 }
 
 
-double SuperPosition();
+double SuperPosition(vector<Node> newNodes,bool choice,int Source_mark, int Source_kind,int element_mark,int element_kinds)
+{/*two choices here
+ 1.voltage difference duo to one source false 0
+ 2.current duo to one source ture 1
+ */
+	DisableSourcesExceptOne(newNodes, Source_kind, Source_mark);
+	GetNodesVoltage(newNodes);
+	/*getcurrentfunction
+	get voltage diff function
+	*/
+
+
+	return 0;
+}

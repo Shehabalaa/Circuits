@@ -1,18 +1,13 @@
 #include "Header.h"
 
 
-
-
 void main()
 {
 	vector<Node> Nodes;
 	Input(Nodes);
-	int n1, n2;
-	int kind=3;
-	int mark=2;
-	GetTwoNodesConnectedWith(Nodes,kind,mark,n1,n2);
 	GetNodesVoltage(Nodes);
-	PrintTest(Nodes);
+	PrintTest(Nodes,1);
+
 	//double Rin = GetRin(Nodes, 2, 50);
     //cout << endl << Rin << endl;
 }

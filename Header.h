@@ -1,8 +1,8 @@
 #include<iostream>
 #include<vector>
 #include<cmath>
-using namespace std;
 
+using namespace std;
 
 struct R
 {
@@ -37,7 +37,7 @@ struct Node {
 
 // FuncsPrototypes
 
-void PrintTest(const vector<Node>&);
+void PrintTest(const vector<Node>&,bool);
 void Input(vector<Node>&);
 double GetRin(vector<Node>,int,int);
 void DisableSourcesExceptOne(vector<Node>&, int, int);
@@ -47,7 +47,7 @@ void DeleteDeadBranches(vector<Node>& Nodes);
 int GetSecondNode(const vector<Node>&, int, int, int);
 void GetTwoNodesConnectedWith(const vector<Node>&,int,int,int&,int&);
 void EquvilantCircuit(const vector<Node>&,int,int,int);
-
+double SuperPosition(vector<Node>, bool, int, int, int, int);
 
 //Node Analysis
 

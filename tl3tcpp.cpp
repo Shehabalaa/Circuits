@@ -1,6 +1,8 @@
 // inputs&&check
 #include "Header.h"
 
+int Ref_index; // that is for reference node (global variable);
+
 void Input(vector<Node>& Nodes)
 {
 	int n;
@@ -10,6 +12,7 @@ void Input(vector<Node>& Nodes)
 	{
 		return;
 	}
+	system("CLS");
 	for (int i = 0;i < n;i++)
 	{
 		Node N;
@@ -17,9 +20,9 @@ void Input(vector<Node>& Nodes)
 		N.NodeVoltage = 0;
 		N.No_elements = 0;
 		N.mark = i;
-		cout << "Node" << i+1 << endl;
 		while (1)
 		{
+			cout << "Node" << i + 1 << endl;
 			cout << "Select corresponding No. OF element " << endl;
 			cout << "1.Resistance\n" << "2.VoltageSourse\n" << "3.Current.Sourse\n" << "0.EndOfOutput\n";
 			int choice;
@@ -53,13 +56,29 @@ void Input(vector<Node>& Nodes)
 				N.J_Sources.push_back(J_Source);
 			}
 
-			
+			system("CLS");
 			N.No_elements++;
 		}
 
 		Nodes.push_back(N);
-
+		system("CLS");
 	}
+	
+	Ref_index = int(Nodes.size() - 1);
+	char choice = 'n';
+	cout << "Do you want to select GroundNode(ReferenceNode)? (Y/N): if (No) last Node will be the reference in whole Program:\n";
+	cin >> choice;
+
+	if (choice == 'y' || choice == 'Y')
+	{
+		PrintTest(Nodes,0);
+		cout << "Nodes on Screen Please enter number of ground Node:\n";
+		cout << "Num = ";
+		cin >>  Ref_index;
+		Ref_index--;
+	}
+
+	system("CLS");
 	return;
 
 }
