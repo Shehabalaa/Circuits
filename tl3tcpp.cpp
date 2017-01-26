@@ -77,6 +77,7 @@ void Input(vector<Node>& Nodes)
 		cin >>  Ref_index;
 		Ref_index--;
 	}
+	Nodes[Ref_index].ref = true;
 
 	system("CLS");
 	return;
