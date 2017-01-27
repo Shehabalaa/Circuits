@@ -48,6 +48,7 @@ int GetSecondNode(const vector<Node>&, int, int, int);
 void GetTwoNodesConnectedWith(const vector<Node>&,int,int,int&,int&);
 void EquvilantCircuit(const vector<Node>&,int,int,int);
 double SuperPosition(vector<Node>, bool, int, int, int, int);
+bool inputcheck(vector<Node>, int, int, double);
 
 //Node Analysis
 

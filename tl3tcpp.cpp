@@ -1,6 +1,8 @@
 // inputs&&check
 #include "Header.h"
 
+
+
 int Ref_index; // that is for reference node (global variable);
 
 void Input(vector<Node>& Nodes)
@@ -31,28 +33,44 @@ void Input(vector<Node>& Nodes)
 			if (choice == 1)
 			{
 				R resistor;
-				cout << "Resistor_mark = ";
-				cin >> resistor.mark;
-				cout << "Resistance_value =  ";
-				cin >> resistor.value;
+				bool check =false;
+				do {
+					cout << "Resistor_num = ";
+					cin >> resistor.mark;
+					cout << "Resistance_value =  ";
+					cin >> resistor.value;
+					double s =  (resistor.value);
+					check = inputcheck(Nodes, resistor.mark, 1, s);
+				} while (!check);
 				N.Resistors.push_back(resistor);
+				
 			}
 			else if (choice == 2)
 			{
 				E V_sources;
-				cout << "Voltage Source_mark = ";
-				cin >> V_sources.mark;
-				cout << "Voltage Source_value =  ";
-				cin >> V_sources.value;
+				bool check=false;
+				do {
+					cout << "Voltage Source_num = ";
+					cin >> V_sources.mark;
+					cout << "Voltage Source_value =  ";
+					cin >> V_sources.value;
+					double s = (-1 * V_sources.value);
+					check = inputcheck(Nodes, V_sources.mark, 2, s);
+				} while (!check);
 				N.V_Sources.push_back(V_sources);
 			}
 			else if (choice == 3)
 			{
 				J J_Source;
-				cout << "Current Source_mark = ";
-				cin >> J_Source.mark;
-				cout << "Current Source_value =  ";
-				cin >> J_Source.value;
+				bool check = false;
+				do {
+					cout << "Current Source_num = ";
+					cin >> J_Source.mark;
+					cout << "Current Source_value =  ";
+					cin >> J_Source.value;
+					double s = (-1 * J_Source.value);
+					check = inputcheck(Nodes, J_Source.mark, 3, s);
+				} while (!check);
 				N.J_Sources.push_back(J_Source);
 			}
 
@@ -256,3 +274,63 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 
 	}
 }
+bool inputcheck(vector<Node> nodes, int m, int type, double val)
+{
+	if (type == 1)
+	{
+		
+		for (unsigned int i = 0; i < nodes.size(); i++)
+		{
+			for (unsigned int j = 0; j < nodes[i].Resistors.size(); j++)
+			{
+				if (nodes[i].Resistors[j].mark == m && nodes[i].Resistors[j].value != (val))
+				{
+					cout << "error : repeated resistance mark "; cout << endl;
+					return false;
+				}
+			}
+
+
+
+		}
+	}
+	else if (type == 2)
+	{
+		
+		for (unsigned int i = 0; i < nodes.size(); i++)
+		{
+			for (unsigned int j = 0; j < nodes[i].V_Sources.size(); j++)
+			{
+				if (nodes[i].V_Sources[j].mark == m && nodes[i].V_Sources[j].value != val)
+				{
+					cout << "error : repeated source mark OR wrong direction"; cout << endl;
+					return false;
+				}
+			}
+
+
+
+		}
+	}
+	else if (type == 3)
+	{
+		
+		for (unsigned int i = 0; i < nodes.size(); i++)
+		{
+			for (unsigned int j = 0; j < nodes[i].J_Sources.size(); j++)
+			{
+				if (nodes[i].J_Sources[j].mark == m && nodes[i].J_Sources[j].value != val)
+				{
+					cout << "error : repeated source mark OR wrong direction"; cout << endl;
+					return false;
+				}
+			}
+
+
+
+		}
+	}
+
+	return true;
+}
+
