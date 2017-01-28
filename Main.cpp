@@ -6,8 +6,8 @@ void main()
 	vector<Node> Nodes;
 	Input(Nodes);
 	GetNodesVoltage(Nodes);
-	double Ans;
-	int n1, n2;
+	double Ans=0;
+	int n1=0, n2=0;
 
 	cout << GetInortonOrVth(Nodes,0,1, 7);
 	cout << GetInortonOrVth(Nodes, 0, 2,7 );
