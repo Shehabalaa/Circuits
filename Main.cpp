@@ -6,14 +6,15 @@ void main()
 	vector<Node> Nodes;
 	Input(Nodes);
 	GetNodesVoltage(Nodes);
-	double current;
+	double Ans;
 	int n1, n2;
-	Get_Current(Nodes, current, 1, 8, n1, n2);
-	cout << current<<endl;
+
+	cout << GetInortonOrVth(Nodes,0,1, 7);
+	cout << GetInortonOrVth(Nodes, 0, 2,7 );
+	cout << GetInortonOrVth(Nodes, 0, 3, 7);
+
 	//PrintTest(Nodes,1);
 
-	//double Rin = GetRin(Nodes, 2, 50);
-    //cout << endl << Rin << endl;
 }
 
 

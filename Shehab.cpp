@@ -585,12 +585,20 @@ double GetInortonOrVth(const vector<Node>& Nodes, bool Choice, int kind, int mar
 	if (Nodes[Nv1].NodeVoltage < Nodes[Nv2].NodeVoltage)
 		swap(Nv1, Nv2);
 	//end
-
-	if (Nc1 == Nv1)
-		return fabs(curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
+	if (Choice)
+	{
+		if (Nc1 == Nv1)
+			return fabs(curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
+		else
+			return fabs(-1 * curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
+	}
 	else
-		return fabs(-1 * curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
-
+	{
+		if (Nc1 == Nv1)
+			return (fabs(curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage))*Rin;
+		else
+			return (fabs(-1 * curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage))*Rin;
+	}
 
 }
 
