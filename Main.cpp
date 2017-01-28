@@ -6,7 +6,11 @@ void main()
 	vector<Node> Nodes;
 	Input(Nodes);
 	GetNodesVoltage(Nodes);
-	PrintTest(Nodes,1);
+	double current;
+	int n1, n2;
+	Get_Current(Nodes, current, 1, 8, n1, n2);
+	cout << current<<endl;
+	//PrintTest(Nodes,1);
 
 	//double Rin = GetRin(Nodes, 2, 50);
     //cout << endl << Rin << endl;

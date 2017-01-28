@@ -565,72 +565,60 @@ void GetTwoNodesConnectedWith(const vector<Node>& Nodes,int kind, int mark,int &
 
 }
 
-void EquvilantCircuit(const vector<Node>& Nodes,int Choice,int kind,int mark)
+double GetInortonOrVth(const vector<Node>& Nodes, bool Choice, int kind, int mark)
 {
-	/*choice have 5 
-	1.Getting Vth only and show it on screen
-	2.Getting Inorton only and show it on screen
-	3.Getting Rin Getting Inorton only and show it on screen
-	4.Simple Draw for EquvilantCircuit on screen (Thevinin)
-	5.Simple Draw for EquvilantCircuit on screen (Norton)
+	/*choice 0,1
+	1.Getting Vth only and show it on screen 1 true
+	2.Getting Inorton only and show it on screen 0 false
 
 	*/
-	//next 3 statments neccessary in all cases
+	//neccessary statments  in all cases
 	double Rin = GetRin(Nodes, kind, mark);
-	int N1, N2;
-	GetTwoNodesConnectedWith(Nodes, kind, mark, N1, N2);
+	int Nv1 = -1, Nv2 = -1; //arrangement acording to voltage
+	int Nc1 = -1, Nc2 = -1; //arrangement according to current
+	double curr = 0;
+
+	Get_Current(Nodes, curr, kind, mark, Nc1, Nc2);
+	Nv1 = Nc1;
+	Nv2 = Nc2;
+
+	if (Nodes[Nv1].NodeVoltage < Nodes[Nv2].NodeVoltage)
+		swap(Nv1, Nv2);
 	//end
 
-	if (Choice == 3)
-	{
-		cout << Rin << endl;
-		return;
-	}
-
-	
-
-
-
-//	double I;
-
-
-	//int Current;
-	if (mark == 1)
-	{
-		for (unsigned int i = 0;i < Nodes[i].Resistors.size();i++)
-		{
-
-		}
-
-	}
-	else if (mark == 2)
-	{
-
-	}
+	if (Nc1 == Nv1)
+		return fabs(curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
 	else
-	{
-
-		
-
-	}
-
-
-
-
-
-
+		return fabs(-1 * curr*Rin + Nodes[Nv1].NodeVoltage - Nodes[Nv2].NodeVoltage);
 
 
 }
 
 
-double SuperPosition(vector<Node> newNodes,bool choice,int Source_mark, int Source_kind,int element_mark,int element_kinds)
+double SuperPosition(vector<Node> newNodes,bool choice, int Source_kind,int Source_mark , int element_kind,int element_mark)
 {/*two choices here
- 1.voltage difference duo to one source false 0
- 2.current duo to one source ture 1
+ 1.current duo to one source ture 1
+ 2.voltage difference duo to one source false 0
  */
 	DisableSourcesExceptOne(newNodes, Source_kind, Source_mark);
 	GetNodesVoltage(newNodes);
+
+	if (choice)
+	{
+		double curr=0;
+		int n1=0, n2=0;
+		Get_Current(newNodes, curr, element_mark, element_kind, n1, n2);
+		return curr;
+		
+	}
+	else
+	{
+		int n1=0, n2=0;
+		GetTwoNodesConnectedWith(newNodes, element_kind, element_mark, n1, n2);
+		return fabs(newNodes[n1].NodeVoltage - newNodes[n2].NodeVoltage);
+
+	}
+
 	/*getcurrentfunction
 	get voltage diff function
 	*/

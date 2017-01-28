@@ -274,6 +274,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 
 	}
 }
+
 bool inputcheck(vector<Node> nodes, int m, int type, double val)
 {
 	if (type == 1)
