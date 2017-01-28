@@ -9,9 +9,9 @@ void main()
 	double Ans=0;
 	int n1=0, n2=0;
 
-	cout << GetInortonOrVth(Nodes,0,1, 7);
-	cout << GetInortonOrVth(Nodes, 0, 2,7 );
-	cout << GetInortonOrVth(Nodes, 0, 3, 7);
+	cout << GetInortonOrVth(Nodes,0,1,7);
+	//cout << GetInortonOrVth(Nodes, 0, 2,7 );
+	//cout << GetInortonOrVth(Nodes, 0, 3, 7);
 
 	//PrintTest(Nodes,1);
 
