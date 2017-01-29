@@ -602,6 +602,7 @@ double GetInortonOrVth(const vector<Node>& Nodes, bool Choice, int kind, int mar
 }
 
 
+
 double SuperPosition(vector<Node> newNodes,bool choice, int Source_kind,int Source_mark , int element_kind,int element_mark)
 {/*two choices here
  1.current duo to one source ture 1

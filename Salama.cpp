@@ -95,7 +95,7 @@ void Get_Current(vector<Node> &Nodes, double& Current, int kind, int mark, int& 
 									V2 = Nodes[z].NodeVoltage;
 							}
 
-							if (V1 < V2) swap(Node1, Node2);
+							if (V1 < V2)  swap(Node1, Node2);
 							return;
 						}
 					}
