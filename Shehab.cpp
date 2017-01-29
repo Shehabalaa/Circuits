@@ -107,7 +107,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 	DisableSourcesExceptOne(Nodes, kind, mark);//disable all sources
 
 
-	// assig current source and resistor will help to get rin as it will equal 1/(vn1-vn2)-1 and delete element of interes
+	// assig current source and resistor will help to get rin as it will equal 1/(vn1-vn2)-1 and delete element of interest
 	bool Temp = true;
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
@@ -129,7 +129,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 						j1.mark = 111111;
 						j1.value = 1;
 						Nodes[i].J_Sources.push_back(j1);
-						Nodes[i].Resistors.erase(Nodes[i].Resistors.begin() + k); // delete element of interesr
+						Nodes[i].Resistors.erase(Nodes[i].Resistors.begin() + k); // delete element of interest
 						Nodes[i].No_elements++;
 						Temp = false;
 
@@ -144,7 +144,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 						j1.mark = 111111;
 						j1.value = -1;
 						Nodes[i].J_Sources.push_back(j1);
-						Nodes[i].Resistors.erase(Nodes[i].Resistors.begin() + k); // delete element of interesr
+						Nodes[i].Resistors.erase(Nodes[i].Resistors.begin() + k); // delete element of interest
 						Nodes[i].No_elements++;
 					}
 
@@ -169,7 +169,7 @@ double GetRin(vector<Node>Nodes,int kind,int mark) // get R equvilant
 					j1.mark = 111111;
 					j1.value = 1;
 					Nodes[i].J_Sources.push_back(j1);
-					Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + k); // delete element of interesr
+					Nodes[i].V_Sources.erase(Nodes[i].V_Sources.begin() + k); // delete element of interest
 					Nodes[i].No_elements++;
 					Temp = false;
 				}

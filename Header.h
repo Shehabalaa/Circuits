@@ -50,6 +50,8 @@ double GetInortonOrVth(const vector<Node>&,bool,int,int);
 double SuperPosition(vector<Node>, bool, int, int, int, int);
 bool inputcheck(vector<Node>, int, int, double);
 void Get_Current(const vector<Node>& , double&, int, int, int&, int&);
+void output(vector<Node>&);
+
 //Node Analysis
 
 void GetNodesVoltage(vector<Node>&);

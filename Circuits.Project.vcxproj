@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="GaussElimination.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="outputcpp.cpp" />
     <ClCompile Include="PrintTest.cpp" />
     <ClCompile Include="Salama.cpp" />
     <ClCompile Include="Shehab.cpp" />
