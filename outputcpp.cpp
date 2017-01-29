@@ -2,20 +2,11 @@
 void output(vector<Node>& Nodes)
 {
 
-	int Choice;//to choose either you want equivalent circuit or response
-	int EquivChoice;//to choose you either want thevenin equivalent or Norton 
-	int Response_Choice;//to choose between Regular response or super position response
-	int Regular_Response;//to choose a no. of a response current , voltage , power or Pmax&Rmax
-	
-	double Current;//to get value of current in element
-	int Node1, Node2;// to print that current flows from node1 to node 2 .. they are sent to Get_Current fn
-	int Break;//if Break is 0 break from your current loop but continue the program ...
-	double Voltage, Power, Pmax, Rmax;//other responses than Current 
-	int n1, n2; // Those 2 are indecis of nodes that are sent to Get 2 nodes connected with Fn. and they have the 2 nodes connecting to an element 
-	int First_Node, Second_Node; //those two nodes i use them to get the voltage difference between them if it's a required response
-	double Voltage_Difference;//it's value is the voltage difference between First_Node &Second_Node the user entered
-	char element;
+	int Choice;int EquivChoice;int Response_Choice;int Regular_Response;
+	double Current;int Node1, Node2;int Break;double Voltage, Power, Pmax, Rmax;
+	int n1, n2; int First_Node, Second_Node; double Voltage_Difference;char element;
 	while (1)
+
 	{
 		cout << "Is The Required a Response OR an Equivalent Circuit ?" << endl;
 		cout << "For Respone Enter 1 \n" << "For Equivalent Circuit Enter 2 \n";
@@ -214,6 +205,7 @@ void output(vector<Node>& Nodes)
 								}
 							}
 							cout << "To choose another Response Enter 0 To continue Getting Power Enter 1 ";
+							cin >> Break;
 							if (Break == 0) break;
 						}
 
@@ -235,12 +227,13 @@ void output(vector<Node>& Nodes)
 							cout << "Rmax =" << rth;
 
 							cout << "To choose another Response Enter 0 To continue Getting Pmax & Rmax Enter 1 ";
+							cin >> Break;
 							if (Break == 0) break;
 						}
 					}
 				}
 			}
-			if (Response_Choice == 1)
+			if (Response_Choice == 1) //super position (responce duo to a source) 
 			{
 				cout << "enter source kind and number";
 				cout << "1.V_source" << endl;
