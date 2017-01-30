@@ -76,8 +76,8 @@ void GetNodesVoltage(vector<Node>& Nodes )// always selecting last node as ref(G
 
 	delete[] Ans;
 
-	for (unsigned int i = 0; i < Nodes.size() - 1; i++) // assign voltage to non essential nodes
-		if (Nodes[i].NodeVoltage == 0&& Nodes[i].No_elements==2)
+	for (unsigned int i = 0; i < Nodes.size() ; i++) // assign voltage to non essential nodes
+		if (!Nodes[i].ref&& Nodes[i].No_elements==2)
 			Nodes[i].NodeVoltage = Nodes[i].V_Sources[0].value + Nodes[GetSecondNode(Nodes,i,2, Nodes[i].V_Sources[0].mark)].NodeVoltage;
 
 	
