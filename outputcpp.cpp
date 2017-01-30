@@ -31,6 +31,80 @@ void output(vector<Node>& Nodes)
 				cin >> kind;
 				cout << "number ="; cin >> number;
 
+				/////////////////////////////////////////////////////////////////////
+				for (unsigned int p = 0; p < Nodes.size(); p++)
+				{
+					if (kind == 1)
+					{
+						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+						{
+							if (Nodes[p].Resistors[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+
+					}
+					else if (kind == 2)
+					{
+						for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+						{
+							if (Nodes[p].V_Sources[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+					}
+					else if (kind == 3)
+					{
+						for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+						{
+							if (Nodes[p].J_Sources[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+					}
+					if (exist == true)
+					{
+						break;
+
+					}
+				}
+				if (exist == false)
+				{
+					cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+					cin.ignore();
+					cin.get();
+					continue;
+
+				}
+
+
+				/////////////////////////////////////////////////////////////////////////////////////////////
+
+
 				double vth = GetInortonOrVth(Nodes, 1, kind, number);
 				double rth = GetRin(Nodes, kind, number);
 				cout << "Vth= " << vth << endl;
@@ -49,6 +123,82 @@ void output(vector<Node>& Nodes)
 				cout << "kind =";
 				cin >> kind;
 				cout << "number ="; int number; cin >> number;
+
+
+
+				/////////////////////////////////////////////////////////////////////
+				for (unsigned int p = 0; p < Nodes.size(); p++)
+				{
+					if (kind == 1)
+					{
+						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+						{
+							if (Nodes[p].Resistors[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+
+					}
+					else if (kind == 2)
+					{
+						for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+						{
+							if (Nodes[p].V_Sources[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+					}
+					else if (kind == 3)
+					{
+						for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+						{
+							if (Nodes[p].J_Sources[o].mark != number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+
+					}
+					if (exist == true)
+					{
+						break;
+
+					}
+				}
+				if (exist == false)
+				{
+					cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+					cin.ignore();
+					cin.get();
+					continue;
+
+				}
+
+
+				/////////////////////////////////////////////////////////////////////////////////////////////
+
 
 				double rn = GetRin(Nodes, kind, number);
 				double in = GetInortonOrVth(Nodes, 0, kind, number);
@@ -88,6 +238,79 @@ void output(vector<Node>& Nodes)
 							int number;
 							cout << "number = ";
 							cin >> number;
+							/////////////////////////////////////////////////////////////////////
+							for (unsigned int p = 0; p < Nodes.size(); p++)
+							{
+								if (kind == 1)
+								{
+									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+									{
+										if (Nodes[p].Resistors[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+
+								}
+								else if (kind == 2)
+								{
+									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+									{
+										if (Nodes[p].V_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								else if (kind == 3)
+								{
+									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+									{
+										if (Nodes[p].J_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								if (exist == true)
+								{
+									break;
+
+								}
+							}
+							if (exist == false)
+							{
+								cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+								cin.ignore();
+								cin.get();
+								continue;
+
+							}
+
+
+							/////////////////////////////////////////////////////////////////////////////////////////////
+
 							cout << endl;
 							Get_Current(Nodes, Current, kind, number, Node1, Node2);
 							cout << "Current= " << Current << "\n" << "Current flows from Node " << Nodes[Node1].mark + 1 << " to Node " << Nodes[Node2].mark + 1 << endl;
@@ -141,6 +364,81 @@ void output(vector<Node>& Nodes)
 							cout << "number= \n";
 							cin >> number;
 
+
+							/////////////////////////////////////////////////////////////////////
+							for (unsigned int p = 0; p < Nodes.size(); p++)
+							{
+								if (kind == 1)
+								{
+									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+									{
+										if (Nodes[p].Resistors[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+
+								}
+								else if (kind == 2)
+								{
+									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+									{
+										if (Nodes[p].V_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								else if (kind == 3)
+								{
+									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+									{
+										if (Nodes[p].J_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								if (exist == true)
+								{
+									break;
+
+								}
+							}
+							if (exist == false)
+							{
+								cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+								cin.ignore();
+								cin.get();
+								continue;
+
+							}
+
+
+							/////////////////////////////////////////////////////////////////////////////////////////////
+
+
 							Power = GetPw(Nodes, kind, number);
 							
 
@@ -168,6 +466,80 @@ void output(vector<Node>& Nodes)
 							cout << endl;
 							cout << "number= \n"; int number;
 							cin >> number;
+							/////////////////////////////////////////////////////////////////////
+							for (unsigned int p = 0; p < Nodes.size(); p++)
+							{
+								if (kind == 1)
+								{
+									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+									{
+										if (Nodes[p].Resistors[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+
+								}
+								else if (kind == 2)
+								{
+									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+									{
+										if (Nodes[p].V_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								else if (kind == 3)
+								{
+									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+									{
+										if (Nodes[p].J_Sources[o].mark != number)
+										{
+											exist = false;
+										}
+										else exist = true;
+										if (exist == true)
+										{
+											break;
+
+										}
+									}
+
+								}
+								if (exist == true)
+								{
+									break;
+
+								}
+							}
+							if (exist == false)
+							{
+								cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+								cin.ignore();
+								cin.get();
+								continue;
+
+							}
+
+
+							/////////////////////////////////////////////////////////////////////////////////////////////
+
+
 							double vth = GetInortonOrVth(Nodes, 1, kind, number);
 							double rth = GetRin(Nodes, kind, number);
 							double pmax = (pow(vth, 2)) / (4 * rth);
@@ -206,10 +578,107 @@ void output(vector<Node>& Nodes)
 					cout << endl;
 					cout << "Sourece_number =";
 					cin >> source_number;
+
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					for (unsigned int p = 0; p < Nodes.size(); p++)
+					{
+
+						if (source_kind == 2)
+						{
+							for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
+							{
+								if (Nodes[p].V_Sources[o].mark != source_number)
+								{
+									exist = false;
+								}
+								else exist = true;
+								if (exist == true)
+								{
+									break;
+
+								}
+							}
+
+						}
+						else if (source_kind == 3)
+						{
+							for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
+							{
+								if (Nodes[p].J_Sources[o].mark != source_number)
+								{
+									exist = false;
+								}
+								else exist = true;
+								if (exist == true)
+								{
+									break;
+
+								}
+							}
+
+						}
+						if (exist == true)
+						{
+							break;
+
+						}
+					}
+					if (exist == false)
+					{
+						cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+						cin.ignore();
+						cin.get();
+						continue;
+
+					}
+
+
+					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 					cout << endl;
 
 					cout << "Resistance_number = " << endl;
 					cin >> Res_number;
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					for (unsigned int p = 0; p < Nodes.size(); p++)
+					{
+
+
+						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
+						{
+							if (Nodes[p].Resistors[o].mark != Res_number)
+							{
+								exist = false;
+							}
+							else exist = true;
+							if (exist == true)
+							{
+								break;
+
+							}
+						}
+						if (exist == true)
+						{
+							break;
+
+						}
+					}
+					if (exist == false)
+					{
+						cout << " ERROR This element number does not exist in your input \n" << "Press Enter To Continue: \n";
+						cin.ignore();
+						cin.get();
+						continue;
+
+					}
+
+
+
+
+					////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 					double responce = 0;
 					responce = SuperPosition(Nodes, op, source_kind + 1, source_number, 1, Res_number);
 
