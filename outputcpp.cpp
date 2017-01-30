@@ -226,8 +226,12 @@ bool output(vector<Node>& Nodes)
 				{
 					system("CLS");
 					cout << "Select corresponding No. OF Response:" << endl;
-					cout << "1.Current \n" << "2.Voltage \n" << "3.Power \n" << "4.Rmax & Pmax \n ";
+					cout << "1.Current \n" << "2.Voltage \n" << "3.Power \n" << "4.Rmax & Pmax \n"<<"5.To return to main menu:\n";
 					cin >> Regular_Response;
+
+					if (Regular_Response == 5)
+						return true;
+
 					if (Regular_Response == 1)//for Current i do that
 					{
 						while (1)

@@ -7,10 +7,10 @@ void main()
 	Input(Nodes);
 	GetNodesVoltage(Nodes);
 	PrintTest(Nodes,1);
-	bool x=0;
+	bool x=false;
 	do 
 	{
-		bool x = output(Nodes);
+		x = output(Nodes);
 
 	} while (x);
 }
