@@ -285,10 +285,11 @@ void output(vector<Node>& Nodes)
 					responce = SuperPosition(Nodes, op, source_kind + 1, source_number, 1, Res_number);
 
 					if (op == 1)
-						cout << "current = " << responce;
+						cout << "current = \n" << responce;
 					else if (op == 0)
 						cout << "voltage = " << responce;
-					cout << "To choose another Response Enter 0 To continue Using SuperPosition " << endl;
+					cout << "To choose another Response Enter 0";
+					cout<<"To Keep Using SuperPosition Enter 1" << endl;
 					cin >> Break;
 					if (Break == 0) break;
 				}
