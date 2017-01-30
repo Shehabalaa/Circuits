@@ -52,14 +52,20 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 			if (int(Nodes[Node1].Resistors.size()) == 1)
 			{
 				helping_Node = GetSecondNode(Nodes, Node1, 1, Nodes[Node1].Resistors[0].mark);
+
+				Current = fabs(Nodes[Node1].NodeVoltage - Nodes[helping_Node].NodeVoltage) / Nodes[Node1].Resistors[0].value;
+
 				if (Nodes[helping_Node].NodeVoltage < Nodes[Node1].NodeVoltage)
 					swap(Node1, Node2);
-
 			}
 			else if (Nodes[Node1].J_Sources.size() == 1)
 			{
+
+				Current = fabs(Nodes[Node1].J_Sources[0].value);
+
 				if (Nodes[Node1].J_Sources[0].value < 0)
 					swap(Node1, Node2);
+	
 			}
 			else
 			{
@@ -94,6 +100,8 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 					if (Nodes[helping_Node2].NodeVoltage < Nodes[helping_Node].NodeVoltage)
 						swap(Node1, Node2);
 
+					Current = fabs(Nodes[helping_Node2].NodeVoltage - Nodes[helping_Node].NodeVoltage) / Nodes[helping_Node].Resistors[0].value;
+
 				}
 				else
 				{
@@ -101,7 +109,7 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 					if (Nodes[helping_Node].J_Sources[0].value < 0)
 						swap(Node1, Node2);
 
-
+					Current = fabs(Nodes[helping_Node].J_Sources[0].value);
 				}
 
 			}
@@ -114,14 +122,20 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 			if (Nodes[Node2].Resistors.size() == 1)
 			{
 				helping_Node = GetSecondNode(Nodes, Node2, 1, Nodes[Node2].Resistors[0].mark);
-				if (Nodes[helping_Node].NodeVoltage > Nodes[Node2].NodeVoltage)
-					swap(Node2, Node2);
+				
 
+				Current = fabs(Nodes[Node2].NodeVoltage - Nodes[helping_Node].NodeVoltage) / Nodes[Node2].Resistors[0].value;
+
+				if (Nodes[helping_Node].NodeVoltage > Nodes[Node2].NodeVoltage)
+					swap(Node1, Node2);
 			}
 			else if (Nodes[Node2].J_Sources.size() == 1)
 			{
+				Current = fabs(Nodes[Node2].J_Sources[0].value);
+
 				if (Nodes[Node2].J_Sources[0].value > 0)
-					swap(Node2, Node2);
+					swap(Node1, Node2);
+				
 			}
 			else
 			{
@@ -155,6 +169,8 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 
 					if (Nodes[helping_Node2].NodeVoltage > Nodes[helping_Node].NodeVoltage)
 						swap(Node1, Node2);
+
+					Current = fabs(Nodes[helping_Node2].NodeVoltage - Nodes[helping_Node].NodeVoltage) / Nodes[helping_Node].Resistors[0].value;
 				}
 				else
 				{
@@ -162,7 +178,7 @@ void Get_Current(const vector<Node>& Nodes, double& Current, int kind, int mark,
 					if (Nodes[helping_Node].J_Sources[0].value > 0)
 						swap(Node2, Node2);
 
-
+					Current = fabs(Nodes[helping_Node].J_Sources[0].value);
 				}
 
 			}
