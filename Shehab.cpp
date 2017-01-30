@@ -590,6 +590,13 @@ double SuperPosition(vector<Node> newNodes,bool choice, int Source_kind,int Sour
  2.voltage difference duo to one source false 0
  */
 	DisableSourcesExceptOne(newNodes, Source_kind, Source_mark);
+	for (unsigned i = 0;i < newNodes.size();i++)
+	{
+		newNodes[i].NodeVoltage = 0;
+		newNodes[i].ref = 0;
+	}
+	newNodes[newNodes.size()-1].ref = 1;
+
 	GetNodesVoltage(newNodes);
 
 	if (choice)
