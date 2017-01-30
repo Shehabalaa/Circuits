@@ -279,7 +279,7 @@ void output(vector<Node>& Nodes)
 					cout << "Resistance_number = " << endl;
 					cin >> Res_number;
 					double responce = 0;
-					responce = SuperPosition(Nodes, op, source_kind, source_number, 1, Res_number);
+					responce = SuperPosition(Nodes, op, source_kind+1, source_number, 1, Res_number);
 
 					if (op == 1)
 						cout << "current = " << responce;
