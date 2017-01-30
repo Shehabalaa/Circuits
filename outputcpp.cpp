@@ -10,7 +10,7 @@ void output(vector<Node>& Nodes)
 		system("CLS");
 		cout << "Please Enter The Coressponding number to a required output:\n";
 		cout << "Is The Required a Response OR an Equivalent Circuit ?" << endl;
-		cout << "1.Respone in Circuit:\n" << "2.Equivalent Circuit:\n";
+		cout << "1.Respone in Circuit:\n" << "2.Equivalent Circuit:\n"<<"3.PowerBalanceCheck:\n";
 		cin >> Choice;
 		system("cls");
 		if (Choice == 2)
@@ -141,81 +141,10 @@ void output(vector<Node>& Nodes)
 							cout << "number= \n";
 							cin >> number;
 
-							Get_Current(Nodes, Current, kind, number, Node1, Node2);
+							Power = GetPw(Nodes, kind, number);
+							
 
-
-
-							if (kind == 1)//resistance
-							{
-
-
-								for (unsigned int k = 0; k < Nodes[Node1].Resistors.size(); k++)
-								{
-									if (Nodes[Node1].Resistors[k].mark == number)
-									{
-
-
-										Power = (Current*Current)*Nodes[Node1].Resistors[k].value;
-
-										cout << "Power= " << Power << "\n";
-										break;
-									}
-
-								}
-
-
-							}
-
-							if (kind == 2)//V_source
-							{
-								for (unsigned int k = 0; k < Nodes[Node1].V_Sources.size(); k++)
-								{
-									if (Nodes[Node1].V_Sources[k].mark == number)
-									{
-
-										if (Nodes[Node1].V_Sources[k].value >= 0)
-											Power = -1 * Current* fabs(Nodes[Node1].V_Sources[k].value);
-										else
-											Power = Current* fabs(Nodes[Node1].V_Sources[k].value);
-
-										cout << "Power= " << Power << "\n";
-
-										break;
-									}
-								}
-							}
-
-							if (kind == 3)//J_source
-							{
-
-								if (Nodes[Node1].NodeVoltage < Nodes[Node2].NodeVoltage)
-									swap(Node1, Node2);
-
-								for (unsigned int k = 0; k < Nodes[Node1].J_Sources.size(); k++)
-								{
-									if (Nodes[Node1].J_Sources[k].mark == number)
-									{
-
-										if (Nodes[Node1].J_Sources[k].value >= 0)
-
-										{
-											Voltage = fabs(Nodes[Node1].NodeVoltage - Nodes[Node2].NodeVoltage);
-											Power = Voltage* fabs(Nodes[Node1].J_Sources[k].value);
-										}
-										else
-										{
-											Voltage = fabs(Nodes[n1].NodeVoltage - Nodes[n2].NodeVoltage);
-											Power = -1 * Voltage* fabs(Nodes[Node1].J_Sources[k].value);
-
-										}
-
-										cout << "Power= " << Power << "\n";
-										break;
-
-
-									}
-								}
-							}
+							cout << "Power= " << Power << "\n";
 							cout << "To choose another Response Enter 0\n";
 							cout << "To continue Getting Power Enter 1\n";
 							cin >> Break;
@@ -296,6 +225,46 @@ void output(vector<Node>& Nodes)
 
 			}
 
+		}
+		else if (Choice == 3)
+		{
+			ofstream outfile;
+			outfile.open("PowerBalance.txt",ios::out);
+
+			double sum = 0;
+			for (unsigned i = 0;i < Nodes.size();i++)
+
+			{
+				for (unsigned k = 0;k < Nodes[i].Resistors.size();k++)
+				{
+					outfile << "R" << Nodes[i].Resistors[k].mark << "->>>  ";
+					Power = GetPw(Nodes, 1, Nodes[i].Resistors[k].mark);
+					sum += Power;
+					outfile << Power << endl;
+				}
+				for (unsigned k = 0;k < Nodes[i].V_Sources.size();k++)
+				{
+					outfile << "E" << Nodes[i].Resistors[k].mark << "->>>  ";
+					Power = GetPw(Nodes, 2, Nodes[i].V_Sources[k].mark);
+					sum -= Power;
+					outfile << Power << endl;
+				}
+				for (unsigned k = 0;k < Nodes[i].J_Sources.size();k++)
+				{
+					outfile << "J" << Nodes[i].Resistors[k].mark << "->>>  ";
+					Power = GetPw(Nodes, 3, Nodes[i].J_Sources[k].mark);
+					sum -= Power;
+					outfile << Power << endl;
+				}
+
+
+			}
+			outfile << "Sum =" << sum;
+			cout << "Please Check PowerBalance File and Press Enter to continue:\n";
+			cin.ignore();
+			cin.get();
+
+			outfile.close();
 		}
 	}
 }

@@ -665,3 +665,86 @@ double SuperPosition(vector<Node> newNodes,bool choice, int Source_kind,int Sour
 	return 0;
 }
 
+double GetPw(const vector<Node>& Nodes,int kind,int number)
+{
+	double Current = 0,Power=0;
+	double Voltage = 0;
+	int Node1 = 0, Node2 = 0;
+
+	Get_Current(Nodes, Current, kind, number, Node1, Node2);
+
+	if (kind == 1)//resistance
+	{
+
+
+		for (unsigned int k = 0; k < Nodes[Node1].Resistors.size(); k++)
+		{
+			if (Nodes[Node1].Resistors[k].mark == number)
+			{
+
+
+				Power = (Current*Current)*Nodes[Node1].Resistors[k].value;
+
+
+				break;
+			}
+
+		}
+
+
+	}
+
+	if (kind == 2)//V_source
+	{
+		for (unsigned int k = 0; k < Nodes[Node1].V_Sources.size(); k++)
+		{
+			if (Nodes[Node1].V_Sources[k].mark == number)
+			{
+
+				if (Nodes[Node1].V_Sources[k].value >= 0)
+					Power = -1 * Current* fabs(Nodes[Node1].V_Sources[k].value);
+				else
+					Power = Current* fabs(Nodes[Node1].V_Sources[k].value);
+
+
+
+				break;
+			}
+		}
+	}
+
+	if (kind == 3)//J_source
+	{
+
+		if (Nodes[Node1].NodeVoltage < Nodes[Node2].NodeVoltage)
+			swap(Node1, Node2);
+
+		for (unsigned int k = 0; k < Nodes[Node1].J_Sources.size(); k++)
+		{
+			if (Nodes[Node1].J_Sources[k].mark == number)
+			{
+
+				if (Nodes[Node1].J_Sources[k].value >= 0)
+
+				{
+					Voltage = fabs(Nodes[Node1].NodeVoltage - Nodes[Node2].NodeVoltage);
+					Power = Voltage* fabs(Nodes[Node1].J_Sources[k].value);
+				}
+				else
+				{
+					Voltage = fabs(Nodes[Node1].NodeVoltage - Nodes[Node2].NodeVoltage);
+					Power = -1 * Voltage* fabs(Nodes[Node1].J_Sources[k].value);
+
+				}
+
+
+				break;
+
+
+			}
+		}
+	}
+
+
+	return Power;
+}
