@@ -6,6 +6,7 @@ void main()
 	vector<Node> Nodes;
 	Input(Nodes);
 	GetNodesVoltage(Nodes);
+	PrintTest(Nodes,1);
 	output(Nodes);
 
 }

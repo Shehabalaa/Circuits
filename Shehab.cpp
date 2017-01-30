@@ -3,6 +3,7 @@
 // circuit input test 4 1 11 5 1 7 6 3 2 2 0 1 7 6 1 8 2 3 3 -5 0 3 3 5 3 2 -2 1 12 4 0 1 12 4 1 8 2 1 11 5 0 circuit problem set b (5)
 // circuit input test 5 1 7 5 3 1 4 1 3 4 0 1 3 4 1 2 1 3 2 10 0 1 2 1 3 2 -10 1 1 2 1 4 40 0 1 4 40 2 20 10 0 2 20 -10 1 7 5 3 1 -4 1 1 2 0  circuit problem set b last one
 // circuit input test 6 1 1 20000 2 1 100 0 1 1 20000 1 2 80000 1 3 3000 0 1 3 3000 3 1 0.012 1 5 60000 1 6 5000 0 1 6 5000 1 7 10000 0 1 7 10000 1 5 60000 3 1 -0.012 1 4 1000 0 1 4 1000 1 2 80000 2 1 -100 0 circuit problem set c (4)
+// 5 1 1 5 1 5 5 2 6 -15 3 8 -5 0 1 5 5 3 8 5 1 4 4 0 1 3 1 3 7 5 1 4 4 0 1 3 1 1 2 5 1 1 5 3 7 -5 0 1 2 5 2 6 15 0 y 1 
 extern int Ref_index;
 
 
@@ -19,7 +20,7 @@ void GetNodesVoltage(vector<Node>& Nodes )// always selecting last node as ref(G
 	}
 
 	DeleteDeadNodes(FakeNodes);
-
+	PrintTest(Nodes, 1);
 	double** Matrix = new double*[int(FakeNodes.size()) - 1];
 	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
 		Matrix[i] = new double[int(FakeNodes.size())];

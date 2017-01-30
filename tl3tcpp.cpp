@@ -119,7 +119,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 			{
 
 				n1 = i;
-				v_value = fabs(nodes[i].V_Sources[j].value);
+				v_value = nodes[i].V_Sources[j].value;
 				x = true;
 				break;
 
@@ -184,7 +184,6 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 				break;
 		}
 
-
 		j = v_value / res;
 
 
@@ -243,7 +242,7 @@ void voltage_to_current(vector<Node>  &nodes, int mark)
 
 		}
 
-
+	
 		j = v_value / res;
 
 
