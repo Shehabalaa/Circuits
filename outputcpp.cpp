@@ -6,7 +6,6 @@ void output(vector<Node>& Nodes)
 	double Current = 0;int Node1 = 0, Node2 = 0;int Break = 0;double Voltage = 0, Power = 0, Pmax = 0, Rmax = 0;
 	int n1 = -1, n2 = -1; int First_Node = -1, Second_Node = -1; double Voltage_Difference = -1;char element = -1;
 	while (1)
-
 	{
 		system("CLS");
 		cout << "Please Enter The Coressponding number to a required output:\n";
@@ -100,7 +99,7 @@ void output(vector<Node>& Nodes)
 
 						}
 					}
-					if (Regular_Response == 2)//for voltage i first ask an element voltage or voltage difference between 2 nodes
+					else if (Regular_Response == 2)//for voltage i first ask an element voltage or voltage difference between 2 nodes
 					{
 						while (1)
 						{
@@ -125,7 +124,7 @@ void output(vector<Node>& Nodes)
 
 					}
 
-					if (Regular_Response == 3)//power
+					else if (Regular_Response == 3)//power
 					{
 
 						while (1)
@@ -225,26 +224,27 @@ void output(vector<Node>& Nodes)
 
 
 						}
-						if (Regular_Response == 4) //Rmax & Pmax
+					}
+					else if (Regular_Response == 4) //Rmax & Pmax
+					{
+						while (1)
 						{
-							while (1)
-							{
-								cout << "Enter Element's Kind and number \n";
-								cout << "Select  No. OF element " << endl;
-								cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n"; int kind;
-								cin >> kind;
-								cout << "Element number= \n"; int number;
-								cin >> number;
-								double vth = GetInortonOrVth(Nodes, 1, kind, number);
-								double rth = GetRin(Nodes, kind, number);
-								double pmax = (pow(vth, 2)) / (4 * rth);
-								cout << "Pmax = " << pmax << endl;
-								cout << "Rmax =" << rth << endl;
+							system("CLS");
+							cout << "Enter Element of interest Kind and number to get Rmax & Pmax \n";
+							cout << "Select  No. OF element " << endl;
+							cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n"; int kind;
+							cin >> kind;
+							cout << "Element number= \n"; int number;
+							cin >> number;
+							double vth = GetInortonOrVth(Nodes, 1, kind, number);
+							double rth = GetRin(Nodes, kind, number);
+							double pmax = (pow(vth, 2)) / (4 * rth);
+							cout << "Pmax = " << pmax << endl;
+							cout << "Rmax =" << rth << endl;
 
-								cout << "To choose another Response Enter 0 To continue Getting Pmax & Rmax Enter 1 " << endl;
-								cin >> Break;
-								if (Break == 0) break;
-							}
+							cout << "To choose another Response Enter 0 To continue Getting Pmax & Rmax Enter 1 " << endl;
+							cin >> Break;
+							if (Break == 0) break;
 						}
 					}
 				}
@@ -279,7 +279,7 @@ void output(vector<Node>& Nodes)
 					cout << "Resistance_number = " << endl;
 					cin >> Res_number;
 					double responce = 0;
-					responce = SuperPosition(Nodes, op, source_kind+1, source_number, 1, Res_number);
+					responce = SuperPosition(Nodes, op, source_kind + 1, source_number, 1, Res_number);
 
 					if (op == 1)
 						cout << "current = " << responce;
@@ -289,8 +289,9 @@ void output(vector<Node>& Nodes)
 					cin >> Break;
 					if (Break == 0) break;
 				}
+
 			}
+
 		}
 	}
-
 }
