@@ -77,7 +77,7 @@ void GetNodesVoltage(vector<Node>& Nodes )// always selecting last node as ref(G
 	delete[] Ans;
 
 	for (unsigned int i = 0; i < Nodes.size() ; i++) // assign voltage to non essential nodes
-		if (!Nodes[i].ref&& Nodes[i].No_elements==2)
+		if (!Nodes[i].ref&& Nodes[i].No_elements==2&& Nodes[i].V_Sources.size())
 			Nodes[i].NodeVoltage = Nodes[i].V_Sources[0].value + Nodes[GetSecondNode(Nodes,i,2, Nodes[i].V_Sources[0].mark)].NodeVoltage;
 
 	
@@ -278,48 +278,90 @@ void DisableSourcesExceptOne(vector<Node>& Nodes,int kind,int mark) // This one 
 
 	// delete all voltage soruces as short circuit
 	// 2 steps firstly adjust nodes some (nodes will be marked then deleted)
-	for (unsigned int i = 0; i < Nodes.size(); i++)
-	{
-		if (Nodes[i].No_elements == 0)
-			continue;
-		for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
+		for (unsigned int i = 0; i < Nodes.size(); i++)
 		{
-			if (Nodes[i].V_Sources[v].mark == mark)
+			if (Nodes[i].No_elements == 0)
 				continue;
-			for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
+
+
+
+			for (unsigned int v = 0; v < Nodes[i].V_Sources.size(); v++)
 			{
-				if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
-					continue;
 
-				for (unsigned int v2 = 0; v2<Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
+
+				if (kind!=2)
 				{
-					if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
+					for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
 					{
+						if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
+							continue;
 
-						for (unsigned int CSs = 0; CSs<Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
+						for (unsigned int v2 = 0; v2 < Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
 						{
-							Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
-							Nodes[i].No_elements++;
+							if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
+							{
+
+								for (unsigned int CSs = 0; CSs < Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
+								{
+									Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
+									Nodes[i].No_elements++;
+								}
+
+								for (unsigned int Rs = 0; Rs < Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
+								{
+									Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
+									Nodes[i].No_elements++;
+								}
+
+
+								Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
+
+
+							}
+
 						}
-
-						for (unsigned int Rs = 0; Rs<Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
-						{
-							Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
-							Nodes[i].No_elements++;
-						}
-
-
-						Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
-
-
 					}
 
 				}
+				else if (Nodes[i].V_Sources[v].mark != mark)
+				{
+					for (unsigned int N2 = i; N2 < Nodes.size() - 1; N2++)
+					{
+						if (Nodes[(N2 + 1) % Nodes.size()].No_elements == 0)
+							continue;
+
+						for (unsigned int v2 = 0; v2 < Nodes[(N2 + 1) % Nodes.size()].V_Sources.size(); v2++)
+						{
+							if (Nodes[i].V_Sources[v].mark == Nodes[(N2 + 1) % Nodes.size()].V_Sources[v2].mark)
+							{
+
+								for (unsigned int CSs = 0; CSs < Nodes[(N2 + 1) % Nodes.size()].J_Sources.size(); CSs++)
+								{
+									Nodes[i].J_Sources.push_back(Nodes[(N2 + 1) % Nodes.size()].J_Sources[CSs]);
+									Nodes[i].No_elements++;
+								}
+
+								for (unsigned int Rs = 0; Rs < Nodes[(N2 + 1) % Nodes.size()].Resistors.size(); Rs++)
+								{
+									Nodes[i].Resistors.push_back(Nodes[(N2 + 1) % Nodes.size()].Resistors[Rs]);
+									Nodes[i].No_elements++;
+								}
+
+
+								Nodes[(N2 + 1) % Nodes.size()].No_elements = 0;
+
+
+							}
+
+						}
+					}
+
+
+
+				}
+
 			}
-
 		}
-
-	}
 
 	DeleteDeadNodes(Nodes); //delte nodes -> look at line 362
 	// secondly:

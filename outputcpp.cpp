@@ -232,9 +232,12 @@ void output(vector<Node>& Nodes)
 							system("CLS");
 							cout << "Enter Element of interest Kind and number to get Rmax & Pmax \n";
 							cout << "Select  No. OF element " << endl;
-							cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n"; int kind;
+							cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n";
+							int kind;
+							cout << "kind=";
 							cin >> kind;
-							cout << "Element number= \n"; int number;
+							cout << endl;
+							cout << "number= \n"; int number;
 							cin >> number;
 							double vth = GetInortonOrVth(Nodes, 1, kind, number);
 							double rth = GetRin(Nodes, kind, number);
