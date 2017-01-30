@@ -50,7 +50,7 @@ void GetTwoNodesConnectedWith(const vector<Node>&, int, int, int&, int&);
 double GetInortonOrVth(const vector<Node>&,bool,int,int);
 double SuperPosition(vector<Node>, bool, int, int, int, int);
 void Get_Current(const vector<Node>& , double&, int, int, int&, int&);
-void output(vector<Node>&);
+bool output(vector<Node>&);
 bool inputcheck(const vector<Node>&, int , int , double );
 double GetPw(const vector<Node>&, int, int);
 //Node Analysis

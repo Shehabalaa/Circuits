@@ -1,8 +1,8 @@
 #include"Header.h"
-void output(vector<Node>& Nodes)
+bool output(vector<Node>& Nodes)
 {
 
-	int Choice = 0;int EquivChoice = 0;int Response_Choice = 0;int Regular_Response = 0;
+	int Choice = 0;int EquivChoice = 0;int Response_Choice = 0;int Regular_Response = 0;bool exist = false;
 	double Current = 0;int Node1 = 0, Node2 = 0;int Break = 0;double Voltage = 0, Power = 0, Pmax = 0, Rmax = 0;
 	int n1 = -1, n2 = -1; int First_Node = -1, Second_Node = -1; double Voltage_Difference = -1;char element = -1;
 	while (1)
@@ -10,16 +10,17 @@ void output(vector<Node>& Nodes)
 		system("CLS");
 		cout << "Please Enter The Coressponding number to a required output:\n";
 		cout << "Is The Required a Response OR an Equivalent Circuit ?" << endl;
-		cout << "1.Respone in Circuit:\n" << "2.Equivalent Circuit:\n"<<"3.PowerBalanceCheck:\n";
+		cout << "1.Respone in Circuit:\n" << "2.Equivalent Circuit:\n" << "3.PowerBalanceCheck:\n";
 		cin >> Choice;
 		system("cls");
 		if (Choice == 2)
 		{
 
-			cout << "For Thevenin Circuit Enter: 1 \n" << "For Norton Circuit Enter: 2 \n";
+			cout << "For Thevenin Circuit Enter: 1 \n" << "For Norton Circuit Enter: 2 \n" << "To return to main menu: 3 \n";
 			cin >> EquivChoice;
 
-
+			if (EquivChoice == 3)
+				return true;
 
 			if (EquivChoice == 1)
 			{
@@ -215,8 +216,10 @@ void output(vector<Node>& Nodes)
 		else if (Choice == 1)
 		{
 			cout << "Please Enter The Coressponding number to a required output:\n";
-			cout << "1.For Regular Response:\n" << "2.For Response due to One Source (SuperPosition):\n";
+			cout << "1.For Regular Response:\n" << "2.For Response due to One Source (SuperPosition):\n" << "3.To return to main menu:\n";
 			cin >> Response_Choice;
+			if (Response_Choice == 3)
+				return true;
 			if (Response_Choice == 1)
 			{
 				while (1)
@@ -440,7 +443,7 @@ void output(vector<Node>& Nodes)
 
 
 							Power = GetPw(Nodes, kind, number);
-							
+
 
 							cout << "Power= " << Power << "\n";
 							cout << "To choose another Response Enter 0\n";
@@ -687,7 +690,7 @@ void output(vector<Node>& Nodes)
 					else if (op == 0)
 						cout << "voltage = " << responce;
 					cout << "To choose another Response Enter 0";
-					cout<<"To Keep Using SuperPosition Enter 1" << endl;
+					cout << "To Keep Using SuperPosition Enter 1" << endl;
 					cin >> Break;
 					if (Break == 0) break;
 				}
@@ -698,9 +701,9 @@ void output(vector<Node>& Nodes)
 		else if (Choice == 3)
 		{
 			ofstream outfile;
-			outfile.open("PowerBalance.txt",ios::out);
+			outfile.open("PowerBalance.txt", ios::out);
 
-			
+
 			struct Block
 			{
 				int kind;
@@ -742,7 +745,7 @@ void output(vector<Node>& Nodes)
 				{
 					bool temp = false;
 
-					for (unsigned int j = 0; j <v1.size();j++)
+					for (unsigned int j = 0; j < v1.size();j++)
 					{
 						if (v1[j].kind == 1 && v1[j].mark == Nodes[i].Resistors[k].mark)
 						{
@@ -765,7 +768,7 @@ void output(vector<Node>& Nodes)
 				{
 					bool temp = false;
 
-					for (unsigned int j = 0;j <v1.size();j++)
+					for (unsigned int j = 0;j < v1.size();j++)
 					{
 						if (v1[j].kind == 2 && v1[j].mark == Nodes[i].V_Sources[k].mark)
 						{
@@ -789,7 +792,7 @@ void output(vector<Node>& Nodes)
 				{
 					bool temp = false;
 
-					for (unsigned int j = 0;j <v1.size();j++)
+					for (unsigned int j = 0;j < v1.size();j++)
 					{
 						if (v1[j].kind == 3 && v1[j].mark == Nodes[i].J_Sources[k].mark)
 						{
@@ -813,10 +816,10 @@ void output(vector<Node>& Nodes)
 
 			}
 			sum *= pow(10, 2);
-			sum=ceil(sum);
+			sum = ceil(sum);
 			sum /= pow(10, 2);
-			if (sum == -0||sum==0)
-				sum =0;
+			if (sum == -0 || sum == 0)
+				sum = 0;
 			outfile << "Sum =" << sum;
 			cout << "Please Check PowerBalance File and Press Enter to continue:\n";
 
