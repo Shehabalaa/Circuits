@@ -231,40 +231,129 @@ void output(vector<Node>& Nodes)
 			ofstream outfile;
 			outfile.open("PowerBalance.txt",ios::out);
 
-			double sum = 0;
-			for (unsigned i = 0;i < Nodes.size();i++)
-
+			
+			struct Block
 			{
-				for (unsigned k = 0;k < Nodes[i].Resistors.size();k++)
+				int kind;
+				int mark;
+			};
+
+			vector<Block> v1;
+			for (unsigned int i = 0;i < Nodes.size();i++)
+			{
+				for (unsigned int k = 0;k < Nodes[i].Resistors.size();k++)
 				{
-					outfile << "R" << Nodes[i].Resistors[k].mark << "->>>  ";
-					Power = GetPw(Nodes, 1, Nodes[i].Resistors[k].mark);
-					sum += Power;
-					outfile << Power << endl;
+					Block b1;
+					b1.kind = 1;
+					b1.mark = Nodes[i].Resistors[k].mark;
+					v1.push_back(b1);
 				}
-				for (unsigned k = 0;k < Nodes[i].V_Sources.size();k++)
+				for (unsigned int k = 0;k < Nodes[i].V_Sources.size();k++)
 				{
-					outfile << "E" << Nodes[i].Resistors[k].mark << "->>>  ";
-					Power = GetPw(Nodes, 2, Nodes[i].V_Sources[k].mark);
-					sum -= Power;
-					outfile << Power << endl;
+					Block b1;
+					b1.kind = 2;
+					b1.mark = Nodes[i].V_Sources[k].mark;
+					v1.push_back(b1);
 				}
-				for (unsigned k = 0;k < Nodes[i].J_Sources.size();k++)
+				for (unsigned int k = 0;k < Nodes[i].J_Sources.size();k++)
 				{
-					outfile << "J" << Nodes[i].Resistors[k].mark << "->>>  ";
-					Power = GetPw(Nodes, 3, Nodes[i].J_Sources[k].mark);
-					sum -= Power;
-					outfile << Power << endl;
+					Block b1;
+					b1.kind = 3;
+					b1.mark = Nodes[i].J_Sources[k].mark;
+					v1.push_back(b1);
 				}
 
 
 			}
+
+			double sum = 0;
+			for (unsigned int i = 0;i < Nodes.size();i++)
+			{
+				for (unsigned int k = 0;k < Nodes[i].Resistors.size();k++)
+				{
+					bool temp = false;
+
+					for (unsigned int j = 0; j <v1.size();j++)
+					{
+						if (v1[j].kind == 1 && v1[j].mark == Nodes[i].Resistors[k].mark)
+						{
+							v1[j].kind = 5684;
+							v1[j].mark = 8744;
+							temp = true;
+						}
+					}
+
+
+					if (temp)
+					{
+						outfile << "R" << Nodes[i].Resistors[k].mark << "->>>  ";
+						Power = GetPw(Nodes, 1, Nodes[i].Resistors[k].mark);
+						sum += Power;
+						outfile << Power << endl;
+					}
+				}
+				for (unsigned int k = 0;k < Nodes[i].V_Sources.size();k++)
+				{
+					bool temp = false;
+
+					for (unsigned int j = 0;j <v1.size();j++)
+					{
+						if (v1[j].kind == 2 && v1[j].mark == Nodes[i].V_Sources[k].mark)
+						{
+							v1[j].kind = 5684;
+							v1[j].mark = 8744;
+							temp = true;
+						}
+					}
+
+
+
+					if (temp)
+					{
+						outfile << "E" << Nodes[i].V_Sources[k].mark << "->>>  ";
+						Power = GetPw(Nodes, 2, Nodes[i].V_Sources[k].mark);
+						sum -= Power;
+						outfile << Power << endl;
+					}
+				}
+				for (unsigned int k = 0;k < Nodes[i].J_Sources.size();k++)
+				{
+					bool temp = false;
+
+					for (unsigned int j = 0;j <v1.size();j++)
+					{
+						if (v1[j].kind == 3 && v1[j].mark == Nodes[i].J_Sources[k].mark)
+						{
+							v1[j].kind = 5684;
+							v1[j].mark = 8744;
+							temp = true;
+						}
+					}
+
+
+
+					if (temp)
+					{
+						outfile << "J" << Nodes[i].J_Sources[k].mark << "->>>  ";
+						Power = GetPw(Nodes, 3, Nodes[i].J_Sources[k].mark);
+						sum -= Power;
+						outfile << Power << endl;
+					}
+				}
+
+
+			}
+			sum *= pow(10, 2);
+			sum=ceil(sum);
+			sum /= pow(10, 2);
+			if (sum == -0||sum==0)
+				sum =0;
 			outfile << "Sum =" << sum;
 			cout << "Please Check PowerBalance File and Press Enter to continue:\n";
-			cin.ignore();
-			cin.get();
 
 			outfile.close();
+			cin.ignore();
+			cin.get();
 		}
 	}
 }
