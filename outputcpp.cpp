@@ -35,20 +35,17 @@ bool output(vector<Node>& Nodes)
 				/////////////////////////////////////////////////////////////////////
 				for (unsigned int p = 0; p < Nodes.size(); p++)
 				{
+					exist = false;
 					if (kind == 1)
 					{
 						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 						{
-							if (Nodes[p].Resistors[o].mark != number)
+							if (Nodes[p].Resistors[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+	
 						}
 
 
@@ -57,16 +54,12 @@ bool output(vector<Node>& Nodes)
 					{
 						for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 						{
-							if (Nodes[p].V_Sources[o].mark != number)
+							if (Nodes[p].V_Sources[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 
 					}
@@ -74,16 +67,12 @@ bool output(vector<Node>& Nodes)
 					{
 						for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 						{
-							if (Nodes[p].J_Sources[o].mark != number)
+							if (Nodes[p].J_Sources[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 
 					}
@@ -130,20 +119,17 @@ bool output(vector<Node>& Nodes)
 				/////////////////////////////////////////////////////////////////////
 				for (unsigned int p = 0; p < Nodes.size(); p++)
 				{
+					exist = false;
 					if (kind == 1)
 					{
 						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 						{
-							if (Nodes[p].Resistors[o].mark != number)
+							if (Nodes[p].Resistors[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 
 
@@ -152,16 +138,12 @@ bool output(vector<Node>& Nodes)
 					{
 						for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 						{
-							if (Nodes[p].V_Sources[o].mark != number)
+							if (Nodes[p].V_Sources[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 
 					}
@@ -169,16 +151,12 @@ bool output(vector<Node>& Nodes)
 					{
 						for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 						{
-							if (Nodes[p].J_Sources[o].mark != number)
+							if (Nodes[p].J_Sources[o].mark == number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 
 					}
@@ -196,7 +174,6 @@ bool output(vector<Node>& Nodes)
 					continue;
 
 				}
-
 
 				/////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -248,20 +225,17 @@ bool output(vector<Node>& Nodes)
 							/////////////////////////////////////////////////////////////////////
 							for (unsigned int p = 0; p < Nodes.size(); p++)
 							{
+								exist = false;
 								if (kind == 1)
 								{
 									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 									{
-										if (Nodes[p].Resistors[o].mark != number)
+										if (Nodes[p].Resistors[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 
@@ -270,16 +244,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 									{
-										if (Nodes[p].V_Sources[o].mark != number)
+										if (Nodes[p].V_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -287,16 +257,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 									{
-										if (Nodes[p].J_Sources[o].mark != number)
+										if (Nodes[p].J_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -314,6 +280,7 @@ bool output(vector<Node>& Nodes)
 								continue;
 
 							}
+
 
 
 							/////////////////////////////////////////////////////////////////////////////////////////////
@@ -375,20 +342,17 @@ bool output(vector<Node>& Nodes)
 							/////////////////////////////////////////////////////////////////////
 							for (unsigned int p = 0; p < Nodes.size(); p++)
 							{
+								exist = false;
 								if (kind == 1)
 								{
 									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 									{
-										if (Nodes[p].Resistors[o].mark != number)
+										if (Nodes[p].Resistors[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 
@@ -397,16 +361,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 									{
-										if (Nodes[p].V_Sources[o].mark != number)
+										if (Nodes[p].V_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -414,16 +374,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 									{
-										if (Nodes[p].J_Sources[o].mark != number)
+										if (Nodes[p].J_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -441,6 +397,7 @@ bool output(vector<Node>& Nodes)
 								continue;
 
 							}
+
 
 
 							/////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,20 +433,17 @@ bool output(vector<Node>& Nodes)
 							/////////////////////////////////////////////////////////////////////
 							for (unsigned int p = 0; p < Nodes.size(); p++)
 							{
+								exist = false;
 								if (kind == 1)
 								{
 									for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 									{
-										if (Nodes[p].Resistors[o].mark != number)
+										if (Nodes[p].Resistors[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 
@@ -498,16 +452,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 									{
-										if (Nodes[p].V_Sources[o].mark != number)
+										if (Nodes[p].V_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -515,16 +465,12 @@ bool output(vector<Node>& Nodes)
 								{
 									for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 									{
-										if (Nodes[p].J_Sources[o].mark != number)
+										if (Nodes[p].J_Sources[o].mark == number)
 										{
-											exist = false;
-										}
-										else exist = true;
-										if (exist == true)
-										{
+											exist = true;
 											break;
-
 										}
+
 									}
 
 								}
@@ -590,38 +536,31 @@ bool output(vector<Node>& Nodes)
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					for (unsigned int p = 0; p < Nodes.size(); p++)
 					{
-
-						if (source_kind == 2)
+						exist = false;
+						
+						if (source_kind +1== 2)
 						{
 							for (unsigned int o = 0; o < Nodes[p].V_Sources.size(); o++)
 							{
-								if (Nodes[p].V_Sources[o].mark != source_number)
+								if (Nodes[p].V_Sources[o].mark == source_number)
 								{
-									exist = false;
-								}
-								else exist = true;
-								if (exist == true)
-								{
+									exist = true;
 									break;
-
 								}
+
 							}
 
 						}
-						else if (source_kind == 3)
+						else if (source_kind + 1 == 3)
 						{
 							for (unsigned int o = 0; o < Nodes[p].J_Sources.size(); o++)
 							{
-								if (Nodes[p].J_Sources[o].mark != source_number)
+								if (Nodes[p].J_Sources[o].mark == source_number)
 								{
-									exist = false;
-								}
-								else exist = true;
-								if (exist == true)
-								{
+									exist = true;
 									break;
-
 								}
+
 							}
 
 						}
@@ -639,6 +578,7 @@ bool output(vector<Node>& Nodes)
 						continue;
 
 					}
+
 
 
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -651,25 +591,20 @@ bool output(vector<Node>& Nodes)
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					for (unsigned int p = 0; p < Nodes.size(); p++)
 					{
-
+						exist = false;
 
 						for (unsigned int o = 0; o < Nodes[p].Resistors.size(); o++)
 						{
-							if (Nodes[p].Resistors[o].mark != Res_number)
+							if (Nodes[p].Resistors[o].mark == Res_number)
 							{
-								exist = false;
-							}
-							else exist = true;
-							if (exist == true)
-							{
+								exist = true;
 								break;
-
 							}
+
 						}
 						if (exist == true)
 						{
 							break;
-
 						}
 					}
 					if (exist == false)
@@ -678,7 +613,6 @@ bool output(vector<Node>& Nodes)
 						cin.ignore();
 						cin.get();
 						continue;
-
 					}
 
 
