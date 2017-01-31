@@ -644,7 +644,7 @@ double SuperPosition(vector<Node> newNodes,bool choice, int Source_kind,int Sour
 	{
 		double curr=0;
 		int n1=0, n2=0;
-		Get_Current(newNodes, curr, element_mark, element_kind, n1, n2);
+		Get_Current(newNodes, curr, element_kind,element_mark, n1, n2);
 		return curr;
 		
 	}
