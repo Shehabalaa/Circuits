@@ -215,7 +215,7 @@ bool output(vector<Node>& Nodes)
 						{
 							system("CLS");
 							cout << "Enter element's Kind and number to get current in that element: \n";
-							cout << "1.Resistance\n" << "2.VoltageSourse\n" << "3.Current.Sourse\n";
+							cout << "1.Resistance\n" << "2.VoltageSource\n" << "3.Current.Source\n";
 							int kind = 0;
 							cout << "kind =";
 							cin >> kind;
@@ -329,7 +329,7 @@ bool output(vector<Node>& Nodes)
 							system("CLS");
 							cout << "Enter Element's Kind and number to get power in that element\n";
 							cout << "Select  No. OF element " << endl;
-							cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n";
+							cout << "1.Resistance\n" << "2.V_Source\n" << "3.C_Source\n";
 							int kind = 0;
 							int number = 0;
 							cout << "kind =";
@@ -423,7 +423,7 @@ bool output(vector<Node>& Nodes)
 							system("CLS");
 							cout << "Enter Element of interest Kind and number to get Rmax & Pmax \n";
 							cout << "Select  No. OF element " << endl;
-							cout << "1.Resistance\n" << "2.V_Sourse\n" << "3.C_Sourse\n";
+							cout << "1.Resistance\n" << "2.V_Source\n" << "3.C_Source\n";
 							int kind;
 							cout << "kind=";
 							cin >> kind;

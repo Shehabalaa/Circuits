@@ -26,7 +26,7 @@ void Input(vector<Node>& Nodes)
 		{
 			cout << "Node" << i + 1 << endl;
 			cout << "Select corresponding No. OF element " << endl;
-			cout << "1.Resistance\n" << "2.VoltageSourse\n" << "3.Current.Sourse\n" << "0.EndOfOutput\n";
+			cout << "1.Resistance\n" << "2.VoltageSource\n" << "3.Current.Source\n" << "0.EndOfOutput\n";
 			int choice;
 			cin >> choice;
 			if (choice == 0) break;
