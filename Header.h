@@ -2,6 +2,7 @@
 #include<vector>
 #include<cmath>
 #include<fstream>
+#include<iomanip>
 
 using namespace std;
 
@@ -53,6 +54,7 @@ void Get_Current(const vector<Node>& , double&, int, int, int&, int&);
 bool output(vector<Node>&);
 bool inputcheck(const vector<Node>&, int , int , double );
 double GetPw(const vector<Node>&, int, int);
+bool SpeacialCheck(const vector<Node> &, int &, int &,double);
 //Node Analysis
 
 void GetNodesVoltage(vector<Node>&);

@@ -754,9 +754,9 @@ bool output(vector<Node>& Nodes)
 
 
 			}
-			sum *= pow(10, 2);
+			sum *= pow(10, 4);
 			sum = ceil(sum);
-			sum /= pow(10, 2);
+			sum /= pow(10, 4);
 			if (sum == -0 || sum == 0)
 				sum = 0;
 			outfile << "Sum =" << sum;
