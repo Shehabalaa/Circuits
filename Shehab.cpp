@@ -20,7 +20,6 @@ void GetNodesVoltage(vector<Node>& Nodes )// always selecting last node as ref(G
 	}
 
 	DeleteDeadNodes(FakeNodes);
-	PrintTest(Nodes, 1);
 	double** Matrix = new double*[int(FakeNodes.size()) - 1];
 	for (unsigned int i = 0; i < FakeNodes.size() - 1; i++)
 		Matrix[i] = new double[int(FakeNodes.size())];
