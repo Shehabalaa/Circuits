@@ -149,13 +149,14 @@
     <ClInclude Include="Header.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Checks.cpp" />
     <ClCompile Include="GaussElimination.cpp" />
+    <ClCompile Include="HelpingFunctions.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="outputcpp.cpp" />
     <ClCompile Include="PrintTest.cpp" />
-    <ClCompile Include="Salama.cpp" />
-    <ClCompile Include="Shehab.cpp" />
-    <ClCompile Include="tl3tcpp.cpp" />
+    <ClCompile Include="Responce.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
