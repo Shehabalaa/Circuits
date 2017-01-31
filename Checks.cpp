@@ -65,7 +65,7 @@ bool inputcheck(const vector<Node> &nodes, int m, int type, double val)
 }
 
 
-bool SpeacialCheck(const vector<Node> &Nodes,int &kind,int &mark,double value)
+bool SpeacialCheck(const vector<Node> &Nodes,int &kind,int &mark,double &value)
 {
 	kind = -1;
 	mark = -1;
